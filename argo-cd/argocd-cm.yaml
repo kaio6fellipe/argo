@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  admin.enabled: "false"
+  url: https://argocd.domain.io/
+  repositories: |
+    - type: helm
+      name: charts
+      url: https://charts.internal.io
+      passwordSecret:
+        key: password
+        name: argocd-repositories-secrets
+      usernameSecret:
+        key: username
+        name: argocd-repositories-secrets
+    - type: git
+      url: https://github.com/kaio6fellipe/argo
+      passwordSecret:
+        key: password
+        name: argocd-repositories-secrets
+      usernameSecret:
+        key: username
+        name: argocd-repositories-secrets
+
