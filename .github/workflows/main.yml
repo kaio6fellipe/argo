@@ -1,0 +1,54 @@
+---
+name: Main workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  yaml-linter:
+    name: Yaml Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Yaml Lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          no_warnings: true
+
+  kube-linter:
+    name: Kube Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Scan repo
+        id: kube-lint-repo
+        uses: stackrox/kube-linter-action@v1.0.4
+        with:
+          directory: clusters
+          format: sarif
+          output-file: kube-linter.sarif
+        continue-on-error: true
+      - name: Upload SARIF report files to GitHub
+        uses: github/codeql-action/upload-sarif@v1
+
+  secret-finder:
+    name: Secrets Finder
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Find Secrets
+        shell: bash
+        run: |
+          if find clusters/ -name '*.yaml' | xargs grep -q "kind: Secret"; then
+              echo "Fail, secret found! :("
+              exit 1
+          else
+              echo "Success, secret not found! :)"
+              exit 0
+          fi
