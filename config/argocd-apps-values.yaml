@@ -18,6 +18,9 @@ applications:
       repoURL: https://github.com/kaio6fellipe/argo.git
       targetRevision: HEAD
     syncPolicy:
+      automated:
+        selfHeal: true
+        prune: true
       syncOptions:
       - CreateNamespace=true
   
