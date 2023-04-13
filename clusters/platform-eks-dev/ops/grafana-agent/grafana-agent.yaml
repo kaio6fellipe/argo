@@ -1,18 +1,18 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: grafana-agent
-  namespace: argocd
-spec:
-  destination:
-    namespace: grafana-agent
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: ''
-    repoURL: 'https://grafana.charts.repo'
-    targetRevision: v1.3.1
-    chart: grafana-agent
-    helm:
-      values: |
-        values.etc
-  project: ops
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: grafana-agent
+#   namespace: argocd
+# spec:
+#   destination:
+#     namespace: grafana-agent
+#     server: 'https://kubernetes.default.svc'
+#   source:
+#     path: ''
+#     repoURL: 'https://grafana.charts.repo'
+#     targetRevision: v1.3.1
+#     chart: grafana-agent
+#     helm:
+#       values: |
+#         values.etc
+#   project: ops
