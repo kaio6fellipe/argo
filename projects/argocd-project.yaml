@@ -16,6 +16,8 @@ spec:
     kind: '*'
   sourceRepos:
   - '*'
+  sourceNamespaces:
+  - '*'
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -34,4 +36,6 @@ spec:
   - group: '*'
     kind: '*'
   sourceRepos:
+  - '*'
+  sourceNamespaces:
   - '*'
