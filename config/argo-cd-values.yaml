@@ -42,8 +42,8 @@ crds:
 ## Globally shared configuration
 global:
   # -- Common labels for the all resources
-  additionalLabels:
-    eks.amazonaws.com/compute-type: fargate
+  additionalLabels: {}
+    # eks.amazonaws.com/compute-type: fargate
     # app: argo-cd
 
   # -- Number of old deployment ReplicaSets to retain. The rest will be garbage collected.
@@ -107,10 +107,10 @@ global:
   nodeSelector: {}
 
   # -- Default tolerations for all components
-  tolerations:
-    - effect: NoSchedule
-      key: eks.amazonaws.com/compute-type
-      value: fargate
+  tolerations: []
+    # - effect: NoSchedule
+    #   key: eks.amazonaws.com/compute-type
+    #   value: fargate
 
   # Default affinity preset for all components
   affinity:
