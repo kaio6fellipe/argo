@@ -1757,7 +1757,7 @@ server:
     # -- Server service labels
     labels: {}
     # -- Server service type
-    type: NodePort
+    type: ClusterIP
     # -- Server service http port for NodePort service type (only if `server.service.type` is set to "NodePort")
     nodePortHttp: 30080
     # -- Server service https port for NodePort service type (only if `server.service.type` is set to "NodePort")
@@ -1832,7 +1832,7 @@ server:
 
   ingress:
     # -- Enable an ingress resource for the Argo CD server
-    enabled: false
+    enabled: true
     # -- Additional ingress annotations
     annotations:
       alb.ingress.kubernetes.io/scheme: internet-facing
@@ -1840,13 +1840,14 @@ server:
     # -- Additional ingress labels
     labels: {}
     # -- Defines which ingress controller will implement the resource
-    ingressClassName: "alb"
+    ingressClassName: alb
 
     # -- List of ingress hosts
     ## Argo Ingress.
     ## Hostnames must be provided if Ingress is enabled.
     ## Secrets must be manually created in the namespace
-    hosts: []
+    hosts:
+      - argocd.ktech-devops.com.br
       # - argocd.example.com
 
     # -- List of ingress paths
