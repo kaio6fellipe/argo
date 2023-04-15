@@ -1837,6 +1837,7 @@ server:
     annotations:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
+      external-dns.alpha.kubernetes.io/hostname: argocd.ktech-devops.com.br
     # -- Additional ingress labels
     labels: {}
     # -- Defines which ingress controller will implement the resource
