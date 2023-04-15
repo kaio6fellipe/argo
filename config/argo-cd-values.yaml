@@ -1837,6 +1837,8 @@ server:
     annotations:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/success-codes: 200,307
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
       external-dns.alpha.kubernetes.io/hostname: argocd.ktech-devops.com.br
     # -- Additional ingress labels
     labels: {}
