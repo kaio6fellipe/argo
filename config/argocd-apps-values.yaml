@@ -55,7 +55,7 @@ applications:
       repoURL: https://github.com/kaio6fellipe/argo.git
       targetRevision: HEAD
       directory:
-        recurse: true
+        recurse: false
         jsonnet: {}
     syncPolicy:
       automated:
@@ -73,7 +73,7 @@ applications:
       repoURL: https://github.com/kaio6fellipe/argo.git
       targetRevision: HEAD
       directory:
-        recurse: true
+        recurse: false
         jsonnet: {}
     syncPolicy:
       automated:

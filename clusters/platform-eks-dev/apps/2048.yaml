@@ -3,12 +3,14 @@ kind: Application
 metadata:
   name: game-2048
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: game-2048
     server: 'https://kubernetes.default.svc'
   source:
-    path: clusters/platform-eks-dev/apps/2048/manifests
+    path: clusters/platform-eks-dev/apps/2048
     repoURL: 'https://github.com/kaio6fellipe/argo'
     targetRevision: HEAD
     directory:

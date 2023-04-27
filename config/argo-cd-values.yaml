@@ -478,6 +478,10 @@ configs:
       url: https://argoproj.github.io/argo-helm
       name: argo-helm
       type: helm
+    bitnami:
+      url: https://charts.bitnami.com/bitnami
+      name: bitnami
+      type: helm
     # istio-helm-repo:
     #   url: https://storage.googleapis.com/istio-prerelease/daily-build/master-latest-daily/charts
     #   name: istio.io
