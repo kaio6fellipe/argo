@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: platform-eks-dev
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: argocd
