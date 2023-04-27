@@ -74,7 +74,6 @@ applications:
       targetRevision: HEAD
       directory:
         recurse: false
-        jsonnet: {}
     syncPolicy:
       automated:
         selfHeal: true
