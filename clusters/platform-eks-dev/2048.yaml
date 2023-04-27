@@ -10,7 +10,7 @@ spec:
     namespace: game-2048
     server: 'https://kubernetes.default.svc'
   source:
-    path: clusters/platform-eks-dev/apps/2048
+    path: clusters/platform-eks-dev/2048
     repoURL: 'https://github.com/kaio6fellipe/argo'
     targetRevision: HEAD
     directory:

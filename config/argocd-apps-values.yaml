@@ -54,9 +54,6 @@ applications:
       path: projects
       repoURL: https://github.com/kaio6fellipe/argo.git
       targetRevision: HEAD
-      directory:
-        recurse: false
-        jsonnet: {}
     syncPolicy:
       automated:
         selfHeal: true
@@ -72,8 +69,6 @@ applications:
       path: clusters
       repoURL: https://github.com/kaio6fellipe/argo.git
       targetRevision: HEAD
-      directory:
-        recurse: false
     syncPolicy:
       automated:
         selfHeal: true
