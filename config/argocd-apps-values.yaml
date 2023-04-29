@@ -4,8 +4,6 @@
 applications:
   - name: argocd
     namespace: argocd
-    finalizers:
-    - resources-finalizer.argocd.argoproj.io
     destination:
       namespace: argocd
       server: https://kubernetes.default.svc

@@ -8,7 +8,7 @@ This project was based on the following topic that is present in the official Ar
 
 Special thanks to [@kurtburak](https://github.com/kurtburak) for his article on Medium: ["Self Managed Argo CD — App Of Everything"](https://medium.com/devopsturkiye/self-managed-argo-cd-app-of-everything-a226eb100cf0), it gave me a great foundation to get started with these setups.
 
-So, basically my Argo installation will be self managing its own settings present in the `config` folder. For this, first I install it with [Terraform](https://github.com/kaio6fellipe/terraform-devops/blob/development/stack/platform/platform-k8s/helm.tf#L1_L44) in my main cluster on AWS and then I guarantee that the resource created in Terraform will not apply any more changes.
+So, basically my Argo installation will be self managing its own settings present in the `config` folder. For this, first I install it with [Terraform](https://github.com/kaio6fellipe/terraform-devops/blob/development/stack/platform/platform-k8s/helm.tf) in my main cluster on AWS and then I guarantee that the resource created in Terraform will not apply any more changes.
 
 ## ✨ Demo
 
