@@ -36,13 +36,18 @@ spec:
       jqPathExpressions:
         - .webhooks[].clientConfig.caBundle
     - group: "*"
-      kind: "Secret"
+      kind: "ValidatingWebhookConfiguration"
       jqPathExpressions:
-        - .data.ca\\.crt
-        - .data.tls\\.crt
-        - .data.tls\\.key
+        - .webhooks[].clientConfig.caBundle
+    - group: "*"
+      kind: "Secret"
+      jsonPointers:
+        - /data
   project: ops
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true
