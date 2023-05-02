@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: book-info
+  name: bookinfo
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: book-info
+    namespace: bookinfo
     server: 'https://kubernetes.default.svc'
   source:
-    path: clusters/platform-eks-dev/book-info
+    path: clusters/platform-eks-dev/bookinfo
     repoURL: 'https://github.com/kaio6fellipe/argo'
     targetRevision: HEAD
     directory:
