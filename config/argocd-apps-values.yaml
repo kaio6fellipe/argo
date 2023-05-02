@@ -12,8 +12,8 @@ applications:
       helm:
         version: v3
         valueFiles:
-        - values.yaml
-        - ../argo-cd-values.yaml
+          - values.yaml
+          - ../argo-cd-values.yaml
       path: config/argo-cd
       repoURL: https://github.com/kaio6fellipe/argo.git
       targetRevision: HEAD
@@ -22,9 +22,9 @@ applications:
         selfHeal: true
         prune: true
       syncOptions:
-      - CreateNamespace=true
-      - ApplyOutOfSyncOnly=true
-  
+        - CreateNamespace=true
+        - ApplyOutOfSyncOnly=true
+
   - name: argocd-apps
     namespace: argocd
     destination:
@@ -35,8 +35,8 @@ applications:
       helm:
         version: v3
         valueFiles:
-        - values.yaml
-        - ../argocd-apps-values.yaml
+          - values.yaml
+          - ../argocd-apps-values.yaml
       path: config/argocd-apps
       repoURL: https://github.com/kaio6fellipe/argo.git
       targetRevision: HEAD
@@ -45,7 +45,7 @@ applications:
         selfHeal: true
         prune: true
       syncOptions:
-      - ApplyOutOfSyncOnly=true
+        - ApplyOutOfSyncOnly=true
 
   - name: projects
     namespace: argocd
@@ -124,13 +124,13 @@ projects:
     additionalAnnotations: {}
     description: Argocd Project
     sourceRepos:
-    - '*'
+      - '*'
     destinations:
-    - namespace: argocd
-      server: https://kubernetes.default.svc
+      - namespace: argocd
+        server: https://kubernetes.default.svc
     clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
+      - group: '*'
+        kind: '*'
     orphanedResources:
       warn: false
 # - name: guestbook

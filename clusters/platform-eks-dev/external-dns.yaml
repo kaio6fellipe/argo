@@ -15,10 +15,12 @@ spec:
       releaseName: external-dns
       version: v3
   ignoreDifferences:
-  - group: "*"
-    kind: "ServiceAccount"
-    jsonPointers:
-    - /metadata/annotations # Ignore differences for IAM Role that is passed via annotations to the Service Account
+    - group: "*"
+      kind: "ServiceAccount"
+      jsonPointers:
+        # Ignore differences for IAM Role that is passed
+        # via annotations to the Service Account
+        - /metadata/annotations
   project: ops
   syncPolicy:
     syncOptions:

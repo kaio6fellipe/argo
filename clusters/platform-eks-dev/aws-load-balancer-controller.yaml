@@ -15,19 +15,22 @@ spec:
       releaseName: aws-load-balancer-controller
       version: v3
       parameters:
-      - name: clusterName
-        value: platform-eks-dev
-      - name: region
-        value: us-east-1
+        - name: clusterName
+          value: platform-eks-dev
+        - name: region
+          value: us-east-1
   ignoreDifferences:
-  - group: "*"
-    kind: "Deployment"
-    jqPathExpressions:
-    - .spec.template.spec.containers[].args[2] # Ignore differences for VPC ID that was passed via Terraform
-  - group: "*"
-    kind: "ServiceAccount"
-    jsonPointers:
-    - /metadata/annotations # Ignore differences for IAM Role that is passed via annotations to the Service Account
+    - group: "*"
+      kind: "Deployment"
+      jqPathExpressions:
+         # Ignore differences for VPC ID that was passed via Terraform
+        - .spec.template.spec.containers[].args[2]
+    - group: "*"
+      kind: "ServiceAccount"
+      jsonPointers:
+        # Ignore differences for IAM Role that is passed via
+        # annotations to the Service Account
+        - /metadata/annotations
   project: ops
   syncPolicy:
     syncOptions:

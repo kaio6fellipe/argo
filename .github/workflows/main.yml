@@ -19,6 +19,11 @@ jobs:
         with:
           file_or_dir: clusters/* projects/* config/*values.yaml
           no_warnings: true
+          config_data: |
+            extends: default
+            rules:
+              line-length:
+                level: warning
 
   kube-linter:
     name: Kube Linter
