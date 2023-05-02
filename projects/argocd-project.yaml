@@ -5,19 +5,19 @@ metadata:
   namespace: argocd
 spec:
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: '*'
+      kind: '*'
   description: apps
   destinations:
-  - namespace: '*'
-    server: '*'
+    - namespace: '*'
+      server: '*'
   namespaceResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: '*'
+      kind: '*'
   sourceRepos:
-  - '*'
+    - '*'
   sourceNamespaces:
-  - '*'
+    - '*'
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
@@ -26,16 +26,16 @@ metadata:
   namespace: argocd
 spec:
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: '*'
+      kind: '*'
   description: ops
   destinations:
-  - namespace: '*'
-    server: '*'
+    - namespace: '*'
+      server: '*'
   namespaceResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: '*'
+      kind: '*'
   sourceRepos:
-  - '*'
+    - '*'
   sourceNamespaces:
-  - '*'
+    - '*'

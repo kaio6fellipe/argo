@@ -3,9 +3,9 @@ name: Main workflow
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   yaml-linter:
@@ -17,6 +17,7 @@ jobs:
       - name: Yaml Lint
         uses: ibiqlik/action-yamllint@v3
         with:
+          file_or_dir: clusters/* projects/* config/*values.yaml
           no_warnings: true
 
   kube-linter:
