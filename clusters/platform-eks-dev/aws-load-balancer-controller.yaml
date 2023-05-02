@@ -21,9 +21,13 @@ spec:
         value: us-east-1
   ignoreDifferences:
   - group: "*"
-    kind: "*"
-    managedFieldsManagers:
-    - aws-load-balancer-controller
+    kind: "Deployment"
+    jqPathExpressions:
+    - .spec.template.spec.containers[].args[2] # Ignore differences for VPC ID that was passed via Terraform
+  - group: "*"
+    kind: "ServiceAccount"
+    jsonPointers:
+    - /metadata/annotations # Ignore differences for IAM Role that is passed via annotations to the Service Account
   project: ops
   syncPolicy:
     syncOptions:
