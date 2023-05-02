@@ -40,7 +40,9 @@ jobs:
           output-file: kube-linter.sarif
         continue-on-error: true
       - name: Upload SARIF report files to GitHub
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: kube-linter.sarif
 
   secret-finder:
     name: Secrets Finder
