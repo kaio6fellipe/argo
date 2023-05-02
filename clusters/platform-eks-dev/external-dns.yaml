@@ -1,24 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external-secrets
+  name: external-dns
   namespace: argocd
 spec:
   destination:
     namespace: kube-system
     server: 'https://kubernetes.default.svc'
   source:
-    chart: external-secrets
-    repoURL: https://charts.external-secrets.io
-    targetRevision: 0.8.1
+    chart: external-dns
+    repoURL: https://kubernetes-sigs.github.io/external-dns
+    targetRevision: 1.12.2
     helm:
-      releaseName: external-secrets
+      releaseName: external-dns
       version: v3
   ignoreDifferences:
-    - group: "*"
-      kind: "*"
-      managedFieldsManagers:
-        - external-secrets
     - group: "*"
       kind: "ServiceAccount"
       jsonPointers:

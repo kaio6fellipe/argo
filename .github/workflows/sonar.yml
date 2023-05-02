@@ -1,0 +1,30 @@
+name: Sonar Cloud
+on:
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
+
+  workflow_dispatch:
+  
+jobs:
+  sonarcloud:
+    name: 'Sonar Cloud validation'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      # - name: Setup Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.10'
+      # - name: Install tox and any other packages
+      #   run: pip install tox
+      # - name: Run tox
+      #   run: tox -e py
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

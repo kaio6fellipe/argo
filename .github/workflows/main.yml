@@ -3,9 +3,9 @@ name: Main workflow
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   yaml-linter:
@@ -17,7 +17,13 @@ jobs:
       - name: Yaml Lint
         uses: ibiqlik/action-yamllint@v3
         with:
+          file_or_dir: clusters/* projects/* config/*values.yaml
           no_warnings: true
+          config_data: |
+            extends: default
+            rules:
+              line-length:
+                level: warning
 
   kube-linter:
     name: Kube Linter
@@ -34,7 +40,15 @@ jobs:
           output-file: kube-linter.sarif
         continue-on-error: true
       - name: Upload SARIF report files to GitHub
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: kube-linter.sarif
+
+  sonarcloud:
+    name: Security check
+    uses: kaio6fellipe/argo/.github/workflows/sonar.yml@main
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   secret-finder:
     name: Secrets Finder

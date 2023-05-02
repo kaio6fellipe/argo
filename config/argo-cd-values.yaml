@@ -723,7 +723,7 @@ controller:
       type: RuntimeDefault
     capabilities:
       drop:
-      - ALL
+        - ALL
 
   # Readiness probe for application controller
   ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
@@ -1037,7 +1037,7 @@ dex:
       type: RuntimeDefault
     capabilities:
       drop:
-      - ALL
+        - ALL
 
   ## Probes for Dex server
   ## Supported from Dex >= 2.28.0
@@ -1181,7 +1181,7 @@ redis:
         type: RuntimeDefault
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     # -- Resource limits and requests for redis-exporter sidecar
     resources: {}
@@ -1270,7 +1270,7 @@ redis:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
 
   # -- Redis service port
   servicePort: 6379
@@ -1537,7 +1537,7 @@ server:
         type: RuntimeDefault
       capabilities:
         drop:
-        - ALL
+          - ALL
 
     # -- Resource limits and requests for the argocd-extensions container
     resources: {}
@@ -1641,7 +1641,7 @@ server:
       type: RuntimeDefault
     capabilities:
       drop:
-      - ALL
+        - ALL
 
   ## Readiness and liveness probes for default backend
   ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
@@ -1848,7 +1848,7 @@ server:
       alb.ingress.kubernetes.io/backend-protocol: HTTPS
       alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
       external-dns.alpha.kubernetes.io/hostname: argocd.ktech-devops.com.br
-      
+
     # -- Additional ingress labels
     labels: {}
     # -- Defines which ingress controller will implement the resource
@@ -1978,7 +1978,7 @@ server:
     enabled: false
     # -- Domains for the Google Managed Certificate
     domains:
-    - argocd.example.com
+      - argocd.example.com
 
   ## Create a Google FrontendConfig Custom Resource, for use with the GKE Ingress Controller
   ## https://cloud.google.com/kubernetes-engine/docs/how-to/ingress-features#configuring_ingress_features_through_frontendconfig_parameters
@@ -2176,7 +2176,7 @@ repoServer:
       type: RuntimeDefault
     capabilities:
       drop:
-      - ALL
+        - ALL
 
   ## Readiness and liveness probes for default backend
   ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
@@ -2519,7 +2519,7 @@ applicationSet:
       type: RuntimeDefault
     capabilities:
       drop:
-      - ALL
+        - ALL
 
   ## Probes for ApplicationSet controller (optional)
   ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
@@ -2814,7 +2814,7 @@ notifications:
       type: RuntimeDefault
     capabilities:
       drop:
-      - ALL
+        - ALL
 
   # -- [Node selector]
   # @default -- `{}` (defaults to global.nodeSelector)
