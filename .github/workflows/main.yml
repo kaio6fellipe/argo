@@ -44,6 +44,12 @@ jobs:
         with:
           sarif_file: kube-linter.sarif
 
+  sonarcloud:
+    name: Security check
+    uses: kaio6fellipe/argo/.github/workflows/sonar.yml@main
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   secret-finder:
     name: Secrets Finder
     runs-on: ubuntu-latest
