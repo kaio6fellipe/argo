@@ -1,5 +1,5 @@
 ---
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: podinfo
@@ -17,4 +17,6 @@ spec:
         name: cpu
         # scale up if usage is above
         # 99% of the requested CPU (100m)
-        targetAverageUtilization: 99
+        target:
+          type: Utilization
+          averageUtilization: 99
