@@ -1,5 +1,11 @@
 # A project to practice Argo CD and GitOps
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kaio6fellipe_argo&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=kaio6fellipe_argo)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=kaio6fellipe_argo&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=kaio6fellipe_argo)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kaio6fellipe_argo&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kaio6fellipe_argo)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=kaio6fellipe_argo&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=kaio6fellipe_argo)
+![](https://img.shields.io/github/commit-activity/w/kaio6fellipe/argo)
+
 > Bootstrap management and application management of my Kubernetes applications.
 
 ## 🧐 How it works?
