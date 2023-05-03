@@ -39,6 +39,9 @@ spec:
         - .spec.template.spec.containers[].env[0]
   project: ops
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true

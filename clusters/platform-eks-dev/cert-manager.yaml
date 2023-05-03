@@ -18,7 +18,7 @@
 #         fullnameOverride: cert-manager
 #         installCRDs: true
 #         serviceAccount:
-#           create: false
+#           create: true
 #           name: "cert-manager"
 #         securityContext:
 #           fsGroup: 65534
