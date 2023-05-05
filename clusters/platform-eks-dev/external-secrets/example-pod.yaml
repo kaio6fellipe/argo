@@ -39,4 +39,3 @@ spec:
             secretKeyRef:
               name: eks-secret-busybox
               key: key-value-bar
-      restartPolicy: Always
