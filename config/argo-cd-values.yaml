@@ -277,11 +277,23 @@ configs:
 
     # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
     # If omitted or empty, users may be still be able to login, but will see no apps, projects, etc...
-    policy.default: ''
-
+    policy.default: role:readonly 
     # -- File containing user-defined policies and role definitions.
     # @default -- `''` (See [values.yaml])
-    policy.csv: ''
+    policy.csv: |
+      # Policy for Cloud Engineers
+      p, role:cloud-engineering, *, *, *, allow
+      
+      # Policy for Developers
+      p, role:developers, applications, sync, */*, allow
+      p, role:developers, applications, get, */*, allow
+      p, role:developers, applications, delete, */pod, allow
+      p, role:developers, applications, action/*, */*, allow
+      p, role:developers, clusters, get, *, allow
+      p, role:developers, repositories, get, *, allow
+
+      g, ktech-devops:cloud-engineering, role:cloud-engineering
+      g, ktech-devops:developers, role:developers
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
