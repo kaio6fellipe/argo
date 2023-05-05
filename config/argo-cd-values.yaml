@@ -559,6 +559,8 @@ extraObjects:
     metadata:
       name: eks-external-secret-argo-github-sso
       namespace: argocd
+      labels:
+        app.kubernetes.io/part-of: argocd
     spec:
       refreshInterval: 10m
       secretStoreRef:
