@@ -553,7 +553,24 @@ configs:
 
 # -- Array of extra K8s manifests to deploy
 ## Note: Supports use of custom Helm templates
-extraObjects: []
+extraObjects:
+  - apiVersion: external-secrets.io/v1beta1
+    kind: ExternalSecret
+    metadata:
+      name: eks-external-secret-argo-github-sso
+      namespace: argocd
+    spec:
+      refreshInterval: 10m
+      secretStoreRef:
+        name: platform-eks-cluster-secret-store
+        kind: ClusterSecretStore
+      target:
+        name: github-sso
+      data:
+        - secretKey: dex.github.clientSecret
+          remoteRef:
+            key: argo-github-sso-secret
+
   # - apiVersion: secrets-store.csi.x-k8s.io/v1
   #   kind: SecretProviderClass
   #   metadata:
