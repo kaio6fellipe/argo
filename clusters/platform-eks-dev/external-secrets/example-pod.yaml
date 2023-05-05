@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+  namespace: external-secrets
+spec:
+  containers:
+    - image: busybox:1.35.0
+      command:
+        - sleep
+        - "3600"
+      imagePullPolicy: IfNotPresent
+      name: busybox
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      env:
+        - name: EXAMPLE_STRING
+          valueFrom:
+            secretKeyRef:
+              name: eks-secret-busybox
+              key: example-string
+        - name: EXAMPLE_BINARY
+          valueFrom:
+            secretKeyRef:
+              name: eks-secret-busybox
+              key: example-binary
+        - name: EXAMPLE_KEY_FOO
+          valueFrom:
+            secretKeyRef:
+              name: eks-secret-busybox
+              key: key-value-foo
+        - name: EXAMPLE_KEY_BAR
+          valueFrom:
+            secretKeyRef:
+              name: eks-secret-busybox
+              key: key-value-bar
+      restartPolicy: Always
