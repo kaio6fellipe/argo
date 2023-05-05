@@ -163,7 +163,7 @@ configs:
     annotations: {}
 
     # -- Argo CD's externally facing base URL (optional). Required when configuring SSO
-    url: ""
+    url: https://argocd.ktech-devops.com.br
 
     # -- The name of tracking label used by Argo CD for resource pruning
     # @default -- Defaults to app.kubernetes.io/instance
@@ -188,17 +188,17 @@ configs:
     timeout.hard.reconciliation: 0s
 
     # Dex configuration
-    # dex.config: |
-    #   connectors:
-    #     # GitHub example
-    #     - type: github
-    #       id: github
-    #       name: GitHub
-    #       config:
-    #         clientID: aabbccddeeff00112233
-    #         clientSecret: $dex.github.clientSecret # Alternatively $<some_K8S_secret>:dex.github.clientSecret
-    #         orgs:
-    #         - name: your-github-org
+    dex.config: |
+      connectors:
+        # GitHub SSO
+        - type: github
+          id: github
+          name: GitHub
+          config:
+            clientID: cb0c03147f6cbb6bf34c
+            clientSecret: $github-sso:dex.github.clientSecret
+            orgs:
+            - name: ktech-devops
 
     # OIDC configuration as an alternative to dex (optional).
     # oidc.config: |
@@ -553,7 +553,24 @@ configs:
 
 # -- Array of extra K8s manifests to deploy
 ## Note: Supports use of custom Helm templates
-extraObjects: []
+extraObjects:
+  - apiVersion: external-secrets.io/v1beta1
+    kind: ExternalSecret
+    metadata:
+      name: eks-external-secret-argo-github-sso
+      namespace: argocd
+    spec:
+      refreshInterval: 10m
+      secretStoreRef:
+        name: platform-eks-cluster-secret-store
+        kind: ClusterSecretStore
+      target:
+        name: github-sso
+      data:
+        - secretKey: dex.github.clientSecret
+          remoteRef:
+            key: argo-github-sso-secret
+
   # - apiVersion: secrets-store.csi.x-k8s.io/v1
   #   kind: SecretProviderClass
   #   metadata:
@@ -2637,7 +2654,7 @@ notifications:
   name: notifications-controller
 
   # -- Argo CD dashboard url; used in place of {{.context.argocdUrl}} in templates
-  argocdUrl:
+  argocdUrl: https://argocd.ktech-devops.com.br
 
   ## Notifications controller Pod Disruption Budget
   ## Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
