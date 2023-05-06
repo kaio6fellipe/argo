@@ -14,6 +14,9 @@ spec:
       helm:
         releaseName: crossplane
         version: v3
+        # parameters:
+        #   name: provider.packages[0]
+        #   value: xpkg.upbound.io/upbound/provider-aws:v0.34.0
     - path: clusters/platform-eks-dev/crossplane
       repoURL: 'https://github.com/kaio6fellipe/argo'
       targetRevision: HEAD
@@ -26,10 +29,8 @@ spec:
   #      - /metadata/annotations
   project: ops
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    # automated:
+    #   prune: true
+    #   selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ApplyOutOfSyncOnly=true
-      - RespectIgnoreDifferences=true
