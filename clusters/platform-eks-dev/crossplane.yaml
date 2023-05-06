@@ -1,38 +1,29 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: crossplane
-  namespace: argocd
-spec:
-  destination:
-    namespace: crossplane-system
-    server: 'https://kubernetes.default.svc'
-  sources:
-    - chart: crossplane
-      repoURL: https://charts.crossplane.io/stable
-      targetRevision: 1.12.0
-      helm:
-        releaseName: crossplane
-        version: v3
-        # parameters:
-        #   name: provider.packages[0]
-        #   value: xpkg.upbound.io/upbound/provider-aws:v0.34.0
-    - path: clusters/platform-eks-dev/crossplane
-      repoURL: 'https://github.com/kaio6fellipe/argo'
-      targetRevision: HEAD
-      directory:
-        recurse: true
-  #ignoreDifferences:
-  #  - group: "*"
-  #    kind: "ServiceAccount"
-  #    jsonPointers:
-  #      # Ignore differences for IAM Role that is passed
-  #      # via annotations to the Service Account
-  #      - /metadata/annotations
-  project: ops
-  syncPolicy:
-    automated: {}
-    #   prune: true
-    #   selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: crossplane
+#   namespace: argocd
+# spec:
+#   destination:
+#     namespace: crossplane-system
+#     server: 'https://kubernetes.default.svc'
+#   sources:
+#     - chart: crossplane
+#       repoURL: https://charts.crossplane.io/stable
+#       targetRevision: 1.12.0
+#       helm:
+#         releaseName: crossplane
+#         version: v3
+#         # parameters:
+#         #   name: provider.packages[0]
+#         #   value: xpkg.upbound.io/upbound/provider-aws:v0.34.0
+#     - path: clusters/platform-eks-dev/crossplane
+#       repoURL: 'https://github.com/kaio6fellipe/argo'
+#       targetRevision: HEAD
+#       directory:
+#         recurse: true
+#   project: ops
+#   syncPolicy:
+#     automated: {}
+#     syncOptions:
+#       - CreateNamespace=true
