@@ -1,24 +1,24 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: bookinfo
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  destination:
-    namespace: bookinfo
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: clusters/platform-eks-dev/bookinfo
-    repoURL: 'https://github.com/kaio6fellipe/argo'
-    targetRevision: HEAD
-    directory:
-      recurse: true
-  project: apps
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: bookinfo
+#   namespace: argocd
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+# spec:
+#   destination:
+#     namespace: bookinfo
+#     server: 'https://kubernetes.default.svc'
+#   source:
+#     path: clusters/platform-eks-dev/bookinfo
+#     repoURL: 'https://github.com/kaio6fellipe/argo'
+#     targetRevision: HEAD
+#     directory:
+#       recurse: true
+#   project: apps
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
+#     syncOptions:
+#       - CreateNamespace=true
