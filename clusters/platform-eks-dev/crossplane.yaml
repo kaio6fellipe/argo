@@ -20,6 +20,8 @@ spec:
     - path: clusters/platform-eks-dev/crossplane
       repoURL: 'https://github.com/kaio6fellipe/argo'
       targetRevision: HEAD
+      directory:
+        recurse: true
   #ignoreDifferences:
   #  - group: "*"
   #    kind: "ServiceAccount"
@@ -29,8 +31,8 @@ spec:
   #      - /metadata/annotations
   project: ops
   syncPolicy:
-    automated:
-      prune: true
+    automated: {}
+    #   prune: true
     #   selfHeal: true
     syncOptions:
       - CreateNamespace=true
