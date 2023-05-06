@@ -292,7 +292,7 @@ configs:
       p, role:developers, clusters, get, *, allow
       p, role:developers, repositories, get, *, allow
 
-      g, ktech-devops:cloud-engineering, role:cloud-engineering
+      g, ktech-devops:cloud-engineering, role:admin
       g, ktech-devops:developers, role:developers
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
