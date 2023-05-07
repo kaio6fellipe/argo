@@ -18,7 +18,7 @@ spec:
         - name: fullnameOverride
           value: metrics-server
         - name: replicas
-          value: 2
+          value: "2"
   project: ops
   syncPolicy:
     automated:
