@@ -6,4 +6,4 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  package: crossplane/provider-aws:v0.39.0
+  package: xpkg.upbound.io/upbound/provider-aws:v0.34.0

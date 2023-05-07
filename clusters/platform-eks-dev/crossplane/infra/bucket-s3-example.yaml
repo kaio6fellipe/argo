@@ -1,16 +1,13 @@
 ---
-apiVersion: s3.aws.crossplane.io/v1beta1
+apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: example-crossplane-bucket
-  annotations:
-    crossplane.io/external-name: example-crossplane-bucket
-  namespace: crossplane-system
+  name: crossplane-example-bucket
+  labels:
+    testing.upbound.io/example-name: s3-crossplane-example
 spec:
   forProvider:
-    acl: private
-    locationConstraint: us-east-1
-    versioningConfiguration:
-      status: Enabled
-  providerConfigRef:
-    name: default
+    region: us-east-1
+    objectLockEnabled: true
+    tags:
+      Name: SampleBucket

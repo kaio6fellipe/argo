@@ -4,7 +4,6 @@ kind: ExternalSecret
 metadata:
   name: eks-external-secret-crossplane-aws-secret
   namespace: crossplane-system
-  argocd.argoproj.io/sync-wave: "2"
 spec:
   refreshInterval: 10m
   secretStoreRef:
