@@ -2,7 +2,7 @@
 apiVersion: aws.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: aws
+  name: default
   argocd.argoproj.io/sync-wave: "3"
 spec:
   credentials:
