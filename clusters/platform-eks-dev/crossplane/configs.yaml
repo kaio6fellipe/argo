@@ -16,7 +16,10 @@ spec:
     repoURL: 'https://github.com/kaio6fellipe/argo'
     targetRevision: HEAD
   project: ops
-  # syncPolicy:
-  #   automated: {}
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
   #   syncOptions:
   #     - CreateNamespace=true
