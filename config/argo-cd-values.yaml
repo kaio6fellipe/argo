@@ -726,11 +726,11 @@ controller:
   # -- Resource limits and requests for the application controller pods
   resources:
     limits:
-      cpu: 1000m
-      memory: 1024Mi
+      cpu: 1500m
+      memory: 1536Mi
     requests:
-      cpu: 250m
-      memory: 256Mi
+      cpu: 1000M
+      memory: 1024Mi
 
   # Application controller container ports
   containerPorts:
