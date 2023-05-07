@@ -231,11 +231,11 @@ configs:
 
     ## Controller Properties
     # -- Number of application status processors
-    controller.status.processors: 20
+    controller.status.processors: 50
     # -- Number of application operation processors
-    controller.operation.processors: 10
+    controller.operation.processors: 25
     # -- Specifies timeout between application self heal attempts
-    controller.self.heal.timeout.seconds: 5
+    controller.self.heal.timeout.seconds: 10
     # -- Repo server RPC call timeout seconds.
     controller.repo.server.timeout.seconds: 60
 
@@ -726,11 +726,11 @@ controller:
   # -- Resource limits and requests for the application controller pods
   resources:
     limits:
-      cpu: 1500m
-      memory: 1536Mi
+      cpu: 2000m
+      memory: 3096Mi
     requests:
-      cpu: 1000M
-      memory: 1024Mi
+      cpu: 1000m
+      memory: 2048Mi
 
   # Application controller container ports
   containerPorts:
@@ -1036,13 +1036,13 @@ dex:
   podLabels: {}
 
   # -- Resource limits and requests for dex
-  resources: {}
-  #  limits:
-  #    cpu: 50m
-  #    memory: 64Mi
-  #  requests:
-  #    cpu: 10m
-  #    memory: 32Mi
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 250m
+      memory: 128Mi
 
   # Dex container ports
   # NOTE: These ports are currently hardcoded and cannot be changed
@@ -1268,13 +1268,13 @@ redis:
   podLabels: {}
 
   # -- Resource limits and requests for redis
-  resources: {}
-  #  limits:
-  #    cpu: 200m
-  #    memory: 128Mi
-  #  requests:
-  #    cpu: 100m
-  #    memory: 64Mi
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 250m
+      memory: 128Mi
 
   # -- Redis pod-level security context
   # @default -- See [values.yaml]
@@ -1470,7 +1470,7 @@ server:
     # -- Enable Horizontal Pod Autoscaler ([HPA]) for the Argo CD server
     enabled: true
     # -- Minimum number of replicas for the Argo CD server [HPA]
-    minReplicas: 2
+    minReplicas: 3
     # -- Maximum number of replicas for the Argo CD server [HPA]
     maxReplicas: 5
     # -- Average CPU utilization percentage for the Argo CD server [HPA]
@@ -1640,13 +1640,13 @@ server:
   podLabels: {}
 
   # -- Resource limits and requests for the Argo CD server
-  resources: {}
-  #  limits:
-  #    cpu: 100m
-  #    memory: 128Mi
-  #  requests:
-  #    cpu: 50m
-  #    memory: 64Mi
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 125m
+      memory: 128Mi
 
   # Server container ports
   containerPorts:
@@ -2037,7 +2037,7 @@ repoServer:
     # -- Enable Horizontal Pod Autoscaler ([HPA]) for the repo server
     enabled: true
     # -- Minimum number of replicas for the repo server [HPA]
-    minReplicas: 2
+    minReplicas: 3
     # -- Maximum number of replicas for the repo server [HPA]
     maxReplicas: 5
     # -- Average CPU utilization percentage for the repo server [HPA]
@@ -2175,13 +2175,13 @@ repoServer:
   podLabels: {}
 
   # -- Resource limits and requests for the repo server pods
-  resources: {}
-  #  limits:
-  #    cpu: 50m
-  #    memory: 128Mi
-  #  requests:
-  #    cpu: 10m
-  #    memory: 64Mi
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
 
   # Repo server container ports
   containerPorts:
@@ -2519,13 +2519,13 @@ applicationSet:
   podLabels: {}
 
   # -- Resource limits and requests for the ApplicationSet controller pods.
-  resources: {}
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+    requests:
+      cpu: 250m
+      memory: 512Mi
 
   # ApplicationSet controller container ports
   containerPorts:

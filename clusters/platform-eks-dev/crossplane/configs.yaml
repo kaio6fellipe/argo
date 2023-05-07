@@ -14,7 +14,7 @@ spec:
     repoURL: 'https://github.com/kaio6fellipe/argo'
     targetRevision: HEAD
   project: ops
-  syncPolicy:
-    automated: {}
-    syncOptions:
-      - CreateNamespace=true
+  # syncPolicy:
+  #   automated: {}
+  #   syncOptions:
+  #     - CreateNamespace=true

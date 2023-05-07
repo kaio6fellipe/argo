@@ -22,6 +22,6 @@ spec:
       targetRevision: HEAD
   project: ops
   syncPolicy:
-    automated: {}
+    # automated: {}
     syncOptions:
       - CreateNamespace=true
