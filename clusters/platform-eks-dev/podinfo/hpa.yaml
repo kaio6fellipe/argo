@@ -9,8 +9,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: podinfo
-  minReplicas: 2
-  maxReplicas: 4
+  minReplicas: 10
+  maxReplicas: 20
   metrics:
     - type: Resource
       resource:
