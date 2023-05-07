@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-providers
+  namespace: argocd
+spec:
+  destination:
+    namespace: crossplane-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: clusters/platform-eks-dev/crossplane/providers
+    repoURL: 'https://github.com/kaio6fellipe/argo'
+    targetRevision: HEAD
+  project: ops
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
