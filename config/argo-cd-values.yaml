@@ -231,11 +231,11 @@ configs:
 
     ## Controller Properties
     # -- Number of application status processors
-    controller.status.processors: 50
+    controller.status.processors: 20
     # -- Number of application operation processors
-    controller.operation.processors: 25
+    controller.operation.processors: 10
     # -- Specifies timeout between application self heal attempts
-    controller.self.heal.timeout.seconds: 10
+    controller.self.heal.timeout.seconds: 5
     # -- Repo server RPC call timeout seconds.
     controller.repo.server.timeout.seconds: 60
 

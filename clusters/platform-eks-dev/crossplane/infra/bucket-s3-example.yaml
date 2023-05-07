@@ -3,6 +3,8 @@ apiVersion: s3.aws.crossplane.io/v1beta1
 kind: Bucket
 metadata:
   name: example-crossplane-bucket
+  annotations:
+    crossplane.io/external-name: example-crossplane-bucket
   namespace: crossplane-system
 spec:
   forProvider:

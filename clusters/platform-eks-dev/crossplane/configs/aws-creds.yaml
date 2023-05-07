@@ -11,7 +11,7 @@ spec:
     name: platform-eks-cluster-secret-store
     kind: ClusterSecretStore
   target:
-    name: aws-secret
+    name: aws-creds
   data:
     - secretKey: creds
       remoteRef:

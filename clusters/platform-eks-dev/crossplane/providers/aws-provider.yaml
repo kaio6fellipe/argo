@@ -2,8 +2,8 @@
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: upbound-provider-aws
+  name: provider-aws
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  package: xpkg.upbound.io/upbound/provider-aws:v0.34.0
+  package: crossplane/provider-aws:v0.39.0
