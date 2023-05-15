@@ -619,7 +619,7 @@ controller:
 
   # -- The number of application controller pods to run.
   # Additional replicas will cause sharding of managed clusters across number of replicas.
-  replicas: 2
+  replicas: 1
 
   ## Application controller Pod Disruption Budget
   ## Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -1040,10 +1040,10 @@ dex:
   # -- Resource limits and requests for dex
   resources:
     limits:
-      cpu: 500m
+      cpu: 250m
       memory: 256Mi
     requests:
-      cpu: 250m
+      cpu: 50m
       memory: 128Mi
 
   # Dex container ports
@@ -1272,10 +1272,10 @@ redis:
   # -- Resource limits and requests for redis
   resources:
     limits:
-      cpu: 500m
+      cpu: 300m
       memory: 256Mi
     requests:
-      cpu: 250m
+      cpu: 100m
       memory: 128Mi
 
   # -- Redis pod-level security context
@@ -1644,10 +1644,10 @@ server:
   # -- Resource limits and requests for the Argo CD server
   resources:
     limits:
-      cpu: 500m
+      cpu: 250m
       memory: 256Mi
     requests:
-      cpu: 125m
+      cpu: 50m
       memory: 128Mi
 
   # Server container ports
@@ -2039,7 +2039,7 @@ repoServer:
     # -- Enable Horizontal Pod Autoscaler ([HPA]) for the repo server
     enabled: true
     # -- Minimum number of replicas for the repo server [HPA]
-    minReplicas: 3
+    minReplicas: 2
     # -- Maximum number of replicas for the repo server [HPA]
     maxReplicas: 5
     # -- Average CPU utilization percentage for the repo server [HPA]
@@ -2179,10 +2179,10 @@ repoServer:
   # -- Resource limits and requests for the repo server pods
   resources:
     limits:
-      cpu: 1000m
+      cpu: 500m
       memory: 512Mi
     requests:
-      cpu: 250m
+      cpu: 100m
       memory: 256Mi
 
   # Repo server container ports
@@ -2378,7 +2378,7 @@ applicationSet:
   name: applicationset-controller
 
   # -- The number of ApplicationSet controller pods to run
-  replicaCount: 2
+  replicaCount: 1
 
   ## ApplicationSet controller Pod Disruption Budget
   ## Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -2523,10 +2523,10 @@ applicationSet:
   # -- Resource limits and requests for the ApplicationSet controller pods.
   resources:
     limits:
-      cpu: 1000m
+      cpu: 500m
       memory: 1024Mi
     requests:
-      cpu: 250m
+      cpu: 100m
       memory: 512Mi
 
   # ApplicationSet controller container ports
@@ -2820,13 +2820,13 @@ notifications:
   podLabels: {}
 
   # -- Resource limits and requests for the notifications controller
-  resources: {}
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
+  resources:
+    limits:
+      cpu: 250m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
 
   # Notification controller container ports
   containerPorts:
