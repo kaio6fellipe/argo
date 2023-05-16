@@ -17,8 +17,8 @@ spec:
         releaseName: crossplane
         version: v3
         parameters:
-          name: args[0]
-          value: "--enable-environment-configs"
+          - name: args[0]
+            value: "--enable-environment-configs"
     - path: clusters/platform-eks-dev/crossplane
       repoURL: 'https://github.com/kaio6fellipe/argo'
       targetRevision: HEAD
