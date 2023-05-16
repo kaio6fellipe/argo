@@ -9,8 +9,8 @@ metadata:
 spec:
   forProvider:
     region: us-east-1
-    objectLockEnabled: true
     tags:
       Name: SampleBucket
+      ManagedBy: Crossplane
   providerConfigRef:
     name: default

@@ -1,39 +1,39 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: aws-node-termination-handler
-#   namespace: argocd
-# spec:
-#   destination:
-#     namespace: kube-system
-#     server: 'https://kubernetes.default.svc'
-#   source:
-#     chart: aws-node-termination-handler
-#     repoURL: https://aws.github.io/eks-charts
-#     targetRevision: 0.21.0
-#     helm:
-#       releaseName: aws-node-termination-handler
-#       version: v3
-#       parameters:
-#         - name: fullnameOverride
-#           value: aws-node-termination-handler
-#         - name: serviceAccount.name
-#           value: aws-node-termination-handler
-#         - name: awsRegion
-#           value: us-east-1
-#   ignoreDifferences:
-#     - group: "*"
-#       kind: "ServiceAccount"
-#       jsonPointers:
-#         # Ignore differences for IAM Role that is passed
-#         # via annotations to the Service Account
-#         - /metadata/annotations
-#   project: ops
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
-#     syncOptions:
-#       - CreateNamespace=true
-#       - ApplyOutOfSyncOnly=true
-#       - RespectIgnoreDifferences=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-node-termination-handler
+  namespace: argocd
+spec:
+  destination:
+    namespace: kube-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    chart: aws-node-termination-handler
+    repoURL: https://aws.github.io/eks-charts
+    targetRevision: 0.21.0
+    helm:
+      releaseName: aws-node-termination-handler
+      version: v3
+      parameters:
+        - name: fullnameOverride
+          value: aws-node-termination-handler
+        - name: serviceAccount.name
+          value: aws-node-termination-handler
+        - name: awsRegion
+          value: us-east-1
+  ignoreDifferences:
+    - group: "*"
+      kind: "ServiceAccount"
+      jsonPointers:
+        # Ignore differences for IAM Role that is passed
+        # via annotations to the Service Account
+        - /metadata/annotations
+  project: ops
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - RespectIgnoreDifferences=true

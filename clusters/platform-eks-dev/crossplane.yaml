@@ -10,14 +10,15 @@ spec:
     namespace: crossplane-system
     server: 'https://kubernetes.default.svc'
   sources:
-    - helm:
+    - chart: crossplane
+      repoURL: https://charts.crossplane.io/stable
+      targetRevision: 1.12.0
+      helm:
+        releaseName: crossplane
         version: v3
-        valueFiles:
-          - values.yaml
-          - ../../crossplane-values.yaml
-      path: clusters/platform-eks-dev/crossplane/charts/crossplane
-      repoURL: https://github.com/kaio6fellipe/argo.git
-      targetRevision: HEAD
+        parameters:
+          name: args[0]
+          value: "--enable-environment-configs"
     - path: clusters/platform-eks-dev/crossplane
       repoURL: 'https://github.com/kaio6fellipe/argo'
       targetRevision: HEAD
