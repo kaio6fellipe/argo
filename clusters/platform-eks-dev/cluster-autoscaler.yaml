@@ -21,6 +21,8 @@ spec:
           value: cluster-autoscaler
         - name: rbac.serviceAccount.name
           value: cluster-autoscaler
+        - name: replicaCount
+          value: "2"
   ignoreDifferences:
     - group: "*"
       kind: "*"
