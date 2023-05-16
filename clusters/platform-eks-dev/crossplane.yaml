@@ -28,12 +28,6 @@ spec:
         # Ignore differences for IAM Role that is passed
         # via annotations to the Service Account
         - /metadata/annotations
-    - group: "*"
-      kind: "ControllerConfig"
-      jsonPointers:
-        # Ignore differences for IAM Role that is passed 
-        # via annotations to the Service Account
-        - /metadata/annotations
   project: ops
   syncPolicy:
     automated:
