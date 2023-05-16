@@ -36,9 +36,9 @@ spec:
         - /metadata/annotations
   project: ops
   syncPolicy:
-    # automated:
-    #   selfHeal: true
-    #   prune: true
-    #   allowEmpty: true
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
     syncOptions:
       - CreateNamespace=true
