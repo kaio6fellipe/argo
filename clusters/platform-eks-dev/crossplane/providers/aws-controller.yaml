@@ -4,6 +4,8 @@ kind: ControllerConfig
 metadata:
   name: aws-config
   namespace: crossplane-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::023093918714:role/crossplane-dev
 spec:
   podSecurityContext:
     fsGroup: 2000
