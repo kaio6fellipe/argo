@@ -4,9 +4,7 @@ kind: ProviderConfig
 metadata:
   name: default
 spec:
-  # assumeRole:
-  #   roleARN: "arn:aws:iam::023093918714:role/crossplane-dev"
   credentials:
-    source: IRSA
-  assumeRoleChain:
-    - roleARN: "arn:aws:iam::023093918714:role/crossplane-dev"
+    source: WebIdentity
+    webIdentity:
+      roleARN: "arn:aws:iam::023093918714:role/crossplane-dev"
