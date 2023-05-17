@@ -6,6 +6,6 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  package: crossplane/provider-aws:v0.40.0
+  package: crossplane/provider-aws:v0.32.0
   controllerConfigRef:
     name: aws-config
