@@ -1,5 +1,5 @@
 ---
-apiVersion: aws.crossplane.io/v1beta1
+apiVersion: aws.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
   name: default
@@ -7,4 +7,4 @@ spec:
   assumeRole:
     roleARN: "arn:aws:iam::023093918714:role/crossplane-dev"
   credentials:
-    source: InjectedIdentity
+    source: IRSA

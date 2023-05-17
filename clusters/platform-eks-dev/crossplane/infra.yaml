@@ -15,11 +15,18 @@ spec:
     path: clusters/platform-eks-dev/crossplane/infra
     repoURL: 'https://github.com/kaio6fellipe/argo'
     targetRevision: HEAD
+  ignoreDifferences:
+    - group: "*"
+      kind: "ServiceAccount"
+      jsonPointers:
+        # Ignore differences for IAM Role that is passed
+        # via annotations to the Service Account
+        - /metadata/annotations
   project: ops
   syncPolicy:
     automated:
       selfHeal: true
       prune: true
       allowEmpty: true
-  #   syncOptions:
-  #     - CreateNamespace=true
+    syncOptions:
+      - RespectIgnoreDifferences=true

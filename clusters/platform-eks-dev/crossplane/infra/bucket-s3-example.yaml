@@ -1,23 +1,16 @@
 ---
-apiVersion: s3.aws.crossplane.io/v1beta1
+apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
   name: crossplane-example-bucket
-  annotations:
+  labels:
     crossplane.io/external-name: crossplane-example-bucket
-  namespace: crossplane-system
+    testing.upbound.io/example-name: s3
 spec:
-  deletionPolicy: Delete
   forProvider:
-    acl: private
-    locationConstraint: us-east-1
-    paymentConfiguration:
-      payer: BucketOwner
-    serverSideEncryptionConfiguration:
-      rules:
-        - applyServerSideEncryptionByDefault:
-            sseAlgorithm: AES256
-    versioningConfiguration:
-      status: Enabled
+    region: us-east-1
+    forceDestroy: true
+    tags:
+      Name: SampleBucket
   providerConfigRef:
     name: default

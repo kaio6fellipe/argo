@@ -37,3 +37,4 @@ spec:
       allowEmpty: true
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true

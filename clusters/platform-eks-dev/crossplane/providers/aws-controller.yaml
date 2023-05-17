@@ -4,6 +4,7 @@ kind: ControllerConfig
 metadata:
   name: aws-config
   annotations:
+    argocd.argoproj.io/sync-wave: "1"
     eks.amazonaws.com/role-arn: arn:aws:iam::023093918714:role/crossplane-dev
 spec:
   podSecurityContext:
