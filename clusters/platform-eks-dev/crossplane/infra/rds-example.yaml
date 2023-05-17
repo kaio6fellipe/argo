@@ -2,6 +2,7 @@ apiVersion: rds.aws.upbound.io/v1beta1
 kind: Instance
 metadata:
   annotations:
+    argocd.argoproj.io/sync-wave: "2"
     meta.upbound.io/example-id: rds/v1beta1/instance
   labels:
     testing.upbound.io/example-name: crossplane-example-dbinstance
@@ -9,43 +10,15 @@ metadata:
 spec:
   forProvider:
     region: us-east-1
-    allocatedStorage: 20
-    autoMinorVersionUpgrade: true
-    backupRetentionPeriod: 14
+    allocatedStorage: 10
+    dbName: crossplane-db-example
+    engine: mysql
+    engineVersion: "5.7"
     instanceClass: db.t3.micro
-    name: example
-    engine: postgres
-    engineVersion: "13.7"
-    username: adminuser
-    autoGeneratePassword: true
-    # passwordSecretRef:
-    #   key: password
-    #   name: example-dbinstance
-    #   namespace: upbound-system
-    backupWindow: "09:46-10:16"
-    maintenanceWindow: "Mon:00:00-Mon:03:00"
-    publiclyAccessible: false
+    parameterGroupName: default.mysql5.7
+    passwordSecretRef:
+      key: aws-rds-password
+      name: crossplane-rds-password
+      namespace: crossplane-system
     skipFinalSnapshot: true
-    storageEncrypted: true
-    storageType: gp2
-    kmsKeyIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: crossplane-sample-key
-  writeConnectionSecretToRef:
-    name: crossplane-example-dbinstance-out
-    namespace: default
-
----
-apiVersion: kms.aws.upbound.io/v1beta1
-kind: Key
-metadata:
-  annotations:
-    meta.upbound.io/example-id: rds/v1beta1/instance
-  labels:
-    testing.upbound.io/example-name: crossplane-sample-key
-  name: crossplane-sample-key
-spec:
-  forProvider:
-    region: us-east-1
-    description: Created with Crossplane
-    deletionWindowInDays: 7
+    username: foo

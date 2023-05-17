@@ -5,6 +5,7 @@ metadata:
   name: default
 spec:
   credentials:
-    source: WebIdentity
-    webIdentity:
-      roleARN: "arn:aws:iam::023093918714:role/crossplane-dev"
+    source: IRSA
+    # source: WebIdentity
+    # webIdentity:
+    #   roleARN: "arn:aws:iam::023093918714:role/crossplane-dev"

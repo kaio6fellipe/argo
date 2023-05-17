@@ -4,8 +4,10 @@ kind: Bucket
 metadata:
   name: crossplane-example-bucket
   labels:
-    crossplane.io/external-name: crossplane-example-bucket
     testing.upbound.io/example-name: s3
+  annotations:
+    crossplane.io/external-name: crossplane-example-bucket
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   forProvider:
     region: us-east-1
