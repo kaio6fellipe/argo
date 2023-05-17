@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: rds/v1beta1/instance
   labels:
-    testing.upbound.io/example-name: example-dbinstance
-  name: example-dbinstance-${Rand.RFC1123Subdomain}
+    testing.upbound.io/example-name: crossplane-example-dbinstance
+  name: crossplane-example-dbinstance
 spec:
   forProvider:
     region: us-east-1
@@ -32,7 +32,7 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: crossplane-sample-key
   writeConnectionSecretToRef:
-    name: example-dbinstance-out
+    name: crossplane-example-dbinstance-out
     namespace: default
 
 ---
@@ -43,9 +43,9 @@ metadata:
     meta.upbound.io/example-id: rds/v1beta1/instance
   labels:
     testing.upbound.io/example-name: crossplane-sample-key
-  name: crossplane-sample-key-${Rand.RFC1123Subdomain}
+  name: crossplane-sample-key
 spec:
   forProvider:
-    region: us-west-1
+    region: us-east-1
     description: Created with Crossplane
     deletionWindowInDays: 7
