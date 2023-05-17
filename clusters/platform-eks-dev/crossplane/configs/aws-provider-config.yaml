@@ -4,5 +4,7 @@ kind: ProviderConfig
 metadata:
   name: default
 spec:
+  assumeRole:
+    roleARN: "arn:aws:iam::023093918714:role/crossplane-dev"
   credentials:
     source: InjectedIdentity
