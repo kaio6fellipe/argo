@@ -13,3 +13,4 @@ spec:
     runAsUser: 0
   args:
     - '--debug'
+    - '--terraform-native-provider-path=""'

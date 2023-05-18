@@ -14,5 +14,3 @@ spec:
     forceDestroy: true
     tags:
       Name: SampleBucket
-  providerConfigRef:
-    name: default
