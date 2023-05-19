@@ -6,7 +6,7 @@ metadata:
   labels:
     testing.upbound.io/example-name: s3
   annotations:
-    crossplane.io/external-name: crossplane-example-bucket-usUdOdQBUkIL3le
+    crossplane.io/external-name: crossplane-example-bucket-usudodqbukil3leiejdo
     argocd.argoproj.io/sync-wave: "3"
 spec:
   forProvider:
