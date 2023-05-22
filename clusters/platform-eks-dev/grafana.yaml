@@ -1,0 +1,107 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  destination:
+    namespace: grafana
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - path: clusters/platform-eks-dev/grafana
+      repoURL: 'https://github.com/kaio6fellipe/argo'
+      targetRevision: HEAD
+    - chart: grafana
+      repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 6.56.5
+      helm:
+        releaseName: grafana
+        version: v3
+        values: |
+          autoscaling:
+            enabled: true
+            minReplicas: 2
+            maxReplicas: 5
+            targetCPU: "75"
+          podDisruptionBudget:
+            minAvailable: 1
+          ingress:
+            enabled: true
+            annotations:
+              kubernetes.io/ingress.class: alb
+              alb.ingress.kubernetes.io/scheme: internet-facing
+              alb.ingress.kubernetes.io/target-type: ip
+              alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
+              alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+              external-dns.alpha.kubernetes.io/hostname: grafana.ktech-devops.com.br
+            hosts:
+              - grafana.ktech-devops.com.br
+            extraPaths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: ssl-redirect
+                    port:
+                      name: use-annotation
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          admin:
+            ## Name of the secret. Can be templated.
+            existingSecret: "grafana-secrets"
+            userKey: GF_SECURITY_ADMIN_USER
+            passwordKey: GF_SECURITY_ADMIN_PASSWORD
+          grafana.ini:
+            paths:
+              data: /var/lib/grafana/
+              logs: /var/log/grafana
+              plugins: /var/lib/grafana/plugins
+              provisioning: /etc/grafana/provisioning
+            analytics:
+              check_for_updates: true
+            log:
+              mode: console
+            grafana_net:
+              url: https://grafana.net
+            server:
+              domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ .Values.ingress.hosts | first }}{{ else }}''{{ end }}"
+            database:
+              type = postgres
+              host = grafana-rds.dev.private.ktech-br.com:5432
+              name = grafana
+              user = grafana_usr
+          envValueFrom:
+            GF_AUTH_GITHUB_CLIENT_ID:
+              secretKeyRef:
+                name: grafana-secrets
+                key: GF_AUTH_GITHUB_CLIENT_ID
+            GF_AUTH_GITHUB_CLIENT_SECRET:
+              secretKeyRef:
+                name: grafana-secrets
+                key: GF_AUTH_GITHUB_CLIENT_SECRET
+            GF_DATABASE_PASSWORD:
+              secretKeyRef:
+                name: grafana-secrets
+                key: GF_DATABASE_PASSWORD
+          env:
+            GF_SERVER_DOMAIN: grafana.ktech-devops.com.br
+            GF_SERVER_ROOT_URL: "https://grafana.ktech-devops.com.br"
+            GF_AUTH_GITHUB_ENABLED: true
+            GF_AUTH_GITHUB_ALLOW_SIGN_UP: true
+            GF_AUTH_GITHUB_SCOPES: "user:email,read:org"
+            GF_AUTH_GITHUB_ALLOWED_ORGANIZATIONS: ktech-br
+            GF_AUTO_ASSIGN_ORG_ROLE: Admin
+          plugins:
+            - grafana-github-datasource
+            - grafana-piechart-panel
+  project: ops
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

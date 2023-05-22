@@ -199,7 +199,7 @@ configs:
             clientID: cb0c03147f6cbb6bf34c
             clientSecret: $github-sso:dex.github.clientSecret
             orgs:
-            - name: ktech-devops
+            - name: ktech-br
 
     # OIDC configuration as an alternative to dex (optional).
     # oidc.config: |
@@ -293,8 +293,8 @@ configs:
       p, role:developers, clusters, get, *, allow
       p, role:developers, repositories, get, *, allow
 
-      g, ktech-devops:cloud-engineering, role:admin
-      g, ktech-devops:developers, role:developers
+      g, ktech-br:cloud-engineering, role:admin
+      g, ktech-br:developers, role:developers
     # Policy rules are in the form:
     #  p, subject, resource, action, object, effect
     # Role definitions and bindings are in the form:
