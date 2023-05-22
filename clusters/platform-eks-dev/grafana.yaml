@@ -93,8 +93,12 @@ spec:
             GF_SERVER_ROOT_URL: "https://grafana.ktech-devops.com.br"
             GF_AUTH_GITHUB_ENABLED: true
             GF_AUTH_GITHUB_ALLOW_SIGN_UP: true
+            GF_AUTH_GITHUB_AUTO_LOGIN: false
             GF_AUTH_GITHUB_SCOPES: "user:email,read:org"
             GF_AUTH_GITHUB_ALLOWED_ORGANIZATIONS: ktech-br
+            GF_AUTH_AUTH_URL = https://github.com/login/oauth/authorize
+            GF_AUTH_TOKEN_URL = https://github.com/login/oauth/access_token
+            GF_AUTH_API_URL = https://api.github.com/user
             GF_AUTO_ASSIGN_ORG_ROLE: Admin
           plugins:
             - grafana-github-datasource
