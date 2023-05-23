@@ -53,7 +53,6 @@ spec:
               cpu: 200m
               memory: 256Mi
           admin:
-            ## Name of the secret. Can be templated.
             existingSecret: "grafana-secrets"
             userKey: GF_SECURITY_ADMIN_USER
             passwordKey: GF_SECURITY_ADMIN_PASSWORD
@@ -97,13 +96,48 @@ spec:
             GF_AUTH_GITHUB_AUTO_LOGIN: false
             GF_AUTH_GITHUB_SCOPES: "user:email,read:org"
             GF_AUTH_GITHUB_ALLOWED_ORGANIZATIONS: ktech-br
-            GF_AUTH_AUTH_URL = https://github.com/login/oauth/authorize
-            GF_AUTH_TOKEN_URL = https://github.com/login/oauth/access_token
-            GF_AUTH_API_URL = https://api.github.com/user
+            GF_AUTH_AUTH_URL: https://github.com/login/oauth/authorize
+            GF_AUTH_TOKEN_URL: https://github.com/login/oauth/access_token
+            GF_AUTH_API_URL: https://api.github.com/user
             GF_AUTO_ASSIGN_ORG_ROLE: Admin
           plugins:
             - grafana-github-datasource
             - grafana-piechart-panel
+          extraObjects:
+            - apiVersion: external-secrets.io/v1beta1
+              kind: ExternalSecret
+              metadata:
+                name: eks-external-secret-grafana
+                namespace: grafana
+              spec:
+                refreshInterval: 10m
+                secretStoreRef:
+                  name: platform-eks-cluster-secret-store
+                  kind: ClusterSecretStore
+                target:
+                  name: grafana-secrets
+                data:
+                  - secretKey: GF_DATABASE_PASSWORD
+                    remoteRef:
+                      key: grafana-secrets
+                      property: GF_DATABASE_PASSWORD
+                  - secretKey: GF_AUTH_GITHUB_CLIENT_ID
+                    remoteRef:
+                      key: grafana-secrets
+                      property: GF_AUTH_GITHUB_CLIENT_ID
+                  - secretKey: GF_AUTH_GITHUB_CLIENT_SECRET
+                    remoteRef:
+                      key: grafana-secrets
+                      property: GF_AUTH_GITHUB_CLIENT_SECRET
+                  - secretKey: GF_SECURITY_ADMIN_USER
+                    remoteRef:
+                      key: grafana-secrets
+                      property: GF_SECURITY_ADMIN_USER
+                  - secretKey: GF_SECURITY_ADMIN_PASSWORD
+                    remoteRef:
+                      key: grafana-secrets
+                      property: GF_SECURITY_ADMIN_PASSWORD
+
   project: platform-eks-dev
   syncPolicy:
     automated:
