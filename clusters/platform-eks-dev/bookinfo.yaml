@@ -15,7 +15,7 @@
 #     targetRevision: HEAD
 #     directory:
 #       recurse: true
-#   project: apps
+#   project: platform-eks-dev
 #   syncPolicy:
 #     automated:
 #       prune: true

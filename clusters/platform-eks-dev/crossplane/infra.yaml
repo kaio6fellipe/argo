@@ -1,23 +1,23 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: crossplane-infra
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "3"
-spec:
-  destination:
-    namespace: crossplane-system
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: clusters/platform-eks-dev/crossplane/infra
-    repoURL: 'https://github.com/kaio6fellipe/argo'
-    targetRevision: HEAD
-  project: ops
-  syncPolicy:
-    automated:
-      selfHeal: true
-      prune: true
-      allowEmpty: true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: crossplane-infra
+#   namespace: argocd
+#   finalizers:
+#     - resources-finalizer.argocd.argoproj.io
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "3"
+# spec:
+#   destination:
+#     namespace: crossplane-system
+#     server: 'https://kubernetes.default.svc'
+#   source:
+#     path: clusters/platform-eks-dev/crossplane/infra
+#     repoURL: 'https://github.com/kaio6fellipe/argo'
+#     targetRevision: HEAD
+#   project: ops
+#   syncPolicy:
+#     automated:
+#       selfHeal: true
+#       prune: true
+#       allowEmpty: true

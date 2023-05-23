@@ -104,7 +104,7 @@ spec:
           plugins:
             - grafana-github-datasource
             - grafana-piechart-panel
-  project: ops
+  project: platform-eks-dev
   syncPolicy:
     automated:
       prune: true
