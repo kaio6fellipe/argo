@@ -13,7 +13,7 @@ spec:
     path: clusters/platform-eks-dev
     repoURL: 'https://github.com/kaio6fellipe/argo'
     targetRevision: HEAD
-  project: ops
+  project: platform-eks-dev
   syncPolicy:
     automated:
       prune: true

@@ -19,7 +19,7 @@ spec:
           value: metrics-server
         - name: replicas
           value: "2"
-  project: ops
+  project: platform-eks-dev
   syncPolicy:
     automated:
       prune: true

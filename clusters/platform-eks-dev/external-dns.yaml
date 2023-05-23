@@ -21,7 +21,7 @@ spec:
         # Ignore differences for IAM Role that is passed
         # via annotations to the Service Account
         - /metadata/annotations
-  project: ops
+  project: platform-eks-dev
   syncPolicy:
     automated:
       prune: true

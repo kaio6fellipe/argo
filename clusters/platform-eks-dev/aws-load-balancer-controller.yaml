@@ -43,7 +43,7 @@ spec:
       kind: "Secret"
       jsonPointers:
         - /data
-  project: ops
+  project: platform-eks-dev
   syncPolicy:
     automated:
       prune: true

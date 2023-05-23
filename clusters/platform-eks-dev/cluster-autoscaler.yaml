@@ -39,7 +39,7 @@ spec:
       jqPathExpressions:
         # Ignore Region parameter released with Terraform
         - .spec.template.spec.containers[].env[0]
-  project: ops
+  project: platform-eks-dev
   syncPolicy:
     automated:
       prune: true
