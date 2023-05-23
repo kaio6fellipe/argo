@@ -172,7 +172,7 @@ configs:
 
     # Kustomize
     # kustomize.buildOptions: --enable-helm
-    # 
+    #
 
     # -- Enable logs RBAC enforcement
     ## Ref: https://argo-cd.readthedocs.io/en/latest/operator-manual/upgrading/2.3-2.4/#enable-logs-rbac-enforcement
