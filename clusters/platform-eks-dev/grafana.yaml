@@ -8,9 +8,9 @@ spec:
     namespace: grafana
     server: 'https://kubernetes.default.svc'
   sources:
-    - path: clusters/platform-eks-dev/grafana
-      repoURL: 'https://github.com/kaio6fellipe/argo'
-      targetRevision: HEAD
+    # - path: clusters/platform-eks-dev/grafana
+    #   repoURL: 'https://github.com/kaio6fellipe/argo'
+    #   targetRevision: HEAD
     - chart: grafana
       repoURL: https://grafana.github.io/helm-charts
       targetRevision: 6.56.5
