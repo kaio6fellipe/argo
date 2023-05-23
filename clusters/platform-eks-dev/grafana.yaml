@@ -19,7 +19,7 @@ spec:
         version: v3
         values: |
           autoscaling:
-            enabled: false
+            enabled: true
             minReplicas: 2
             maxReplicas: 5
             targetCPU: "75"
@@ -72,7 +72,7 @@ spec:
               domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ .Values.ingress.hosts | first }}{{ else }}''{{ end }}"
             database:
               type: postgres
-              host: grafana-rds.dev.private.ktech-br.com:5432
+              host: "grafana-rds.dev.private.ktech-br.com:5432"
               name: grafana
               user: grafana_usr
           envValueFrom:
