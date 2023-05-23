@@ -19,7 +19,7 @@ spec:
         version: v3
         values: |
           autoscaling:
-            enabled: true
+            enabled: false
             minReplicas: 2
             maxReplicas: 5
             targetCPU: "75"
