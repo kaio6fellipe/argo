@@ -15,7 +15,7 @@
 #     path: clusters/platform-eks-dev/crossplane/infra
 #     repoURL: 'https://github.com/kaio6fellipe/argo'
 #     targetRevision: HEAD
-#   project: ops
+#   project: platform-eks-dev
 #   syncPolicy:
 #     automated:
 #       selfHeal: true
