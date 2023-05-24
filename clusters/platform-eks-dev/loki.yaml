@@ -266,11 +266,12 @@ spec:
             create: true
             # -- The name of the ServiceAccount to use.
             # If not set and create is true, a name is generated using the fullname template
-            name: null
+            name: loki
             # -- Image pull secrets for the service account
             imagePullSecrets: []
             # -- Annotations for the service account
-            annotations: {}
+            annotations:
+              eks.amazonaws.com/role-arn: "arn:aws:iam::023093918714:role/LokiStorage-platform-eks-dev"
             # -- Set this toggle to false to opt out of automounting API credentials for the service account
             automountServiceAccountToken: true
 
