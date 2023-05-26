@@ -80,7 +80,8 @@ spec:
 
             # -- Pod annotations for all pods directly managed by this chart. Usable for example to associate a version to 'global.extraEnv' and 'global.extraEnvFrom' and trigger a restart of the affected services.
             # scope: admin-api, alertmanager, compactor, distributor, gateway, ingester, memcached, nginx, overrides-exporter, querier, query-frontend, query-scheduler, ruler, store-gateway, tokengen
-            podAnnotations: {}
+            podAnnotations:
+              bucketSecretVersion: "0"
 
           serviceAccount:
             # -- Whether to create a service account or not. In case 'create' is false, do set 'name' to an existing service account name.
@@ -415,7 +416,22 @@ spec:
               {{- end}}
 
             # -- Additional structured values on top of the text based 'mimir.config'. Applied after the text based config is evaluated for templates. Enables adding and modifying YAML elements in the evaulated 'mimir.config'.
-            structuredConfig: {}
+            structuredConfig:
+              common:
+                storage:
+                  backend: s3
+                  s3:
+                    # endpoint: s3.us-east-1.amazonaws.com
+                    region: us-east-1
+                blocks_storage:
+                  s3:
+                    bucket_name: mimir-blocks-bucket-ktech-br-dev
+                alertmanager_storage:
+                  s3:
+                    bucket_name: mimir-alertmanager-bucket-ktech-br-dev
+                ruler_storage:
+                  s3:
+                    bucket_name: mimir-ruler-bucket-ktech-br-dev
 
           # runtimeConfig provides a reloadable runtime configuration file for some specific configuration.
           runtimeConfig: {}
@@ -447,7 +463,7 @@ spec:
             # If alertmanager.zoneAwareReplication.enabled=false, this number is taken as is.
             # Otherwise each zone starts `ceil(replicas / number_of_zones)` number of pods.
             #   E.g. if 'replicas' is set to 4 and there are 3 zones, then 4/3=1.33 and after rounding up it means 2 pods per zone are started.
-            replicas: 1
+            replicas: 2
 
             statefulSet:
               enabled: true
@@ -460,9 +476,11 @@ spec:
             schedulerName: ""
 
             resources:
+              limits:
+                memory: 1.4Gi
               requests:
-                cpu: 10m
-                memory: 32Mi
+                cpu: 1
+                memory: 1Gi
 
             # -- Fallback config for alertmanager.
             # When a tenant doesn't have an Alertmanager configuration, the Grafana Mimir Alertmanager uses the fallback configuration.
@@ -680,16 +698,18 @@ spec:
                 storageClass: null
 
           distributor:
-            replicas: 1
+            replicas: 2
 
             service:
               annotations: {}
               labels: {}
 
             resources:
+              limits:
+                memory: 5.7Gi
               requests:
-                cpu: 100m
-                memory: 512Mi
+                cpu: 2
+                memory: 4Gi
 
             # Additional distributor container arguments, e.g. log level (debug, info, warn, error)
             extraArgs: {}
@@ -767,9 +787,11 @@ spec:
             schedulerName: ""
 
             resources:
+              limits:
+                memory: 12Gi
               requests:
-                cpu: 100m
-                memory: 512Mi
+                cpu: 3.5
+                memory: 8Gi
 
             # Additional ingester container arguments, e.g. log level (debug, info, warn, error)
             extraArgs: {}
@@ -791,16 +813,33 @@ spec:
             # -- NodeSelector to pin ingester pods to certain set of nodes. This is ignored when ingester.zoneAwareReplication.enabled=true.
             nodeSelector: {}
             # -- Pod affinity settings for the ingester. This is ignored when ingester.zoneAwareReplication.enabled=true.
-            affinity: {}
+            affinity:
+              podAntiAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  - labelSelector:
+                      matchExpressions:
+                        - key: target # support for enterprise.legacyLabels
+                          operator: In
+                          values:
+                            - ingester
+                    topologyKey: 'kubernetes.io/hostname'
+
+                  - labelSelector:
+                      matchExpressions:
+                        - key: app.kubernetes.io/component
+                          operator: In
+                          values:
+                            - ingester
+                    topologyKey: 'kubernetes.io/hostname'
 
             # -- topologySpreadConstraints allows to customize the default topologySpreadConstraints. This can be either a single dict as shown below or a slice of topologySpreadConstraints.
             # labelSelector is taken from the constraint itself (if it exists) or is generated by the chart using the same selectors as for services.
             # It is recommended to replace this with requiredDuringSchedulingIgnoredDuringExecution podAntiAffinity rules when
             # deploying to production.
-            topologySpreadConstraints:
-              maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: ScheduleAnyway
+            topologySpreadConstraints: {}
+              # maxSkew: 1
+              # topologyKey: kubernetes.io/hostname
+              # whenUnsatisfiable: ScheduleAnyway
 
             annotations: {}
 
@@ -822,7 +861,7 @@ spec:
                 - ReadWriteOnce
 
               # Ingester data Persistent Volume size
-              size: 2Gi
+              size: 50Gi
 
               # Subdirectory of Ingester data Persistent Volume to mount
               # Useful if the volume's root directory is not empty
@@ -898,7 +937,7 @@ spec:
               maxUnavailable: 25
               # -- topologyKey to use in pod anti-affinity. If unset, no anti-affinity rules are generated. If set, the generated anti-affinity rule makes sure that pods from different zones do not mix.
               # E.g.: topologyKey: 'kubernetes.io/hostname'
-              topologyKey: null
+              topologyKey: 'kubernetes.io/hostname'
               # -- Auxiliary values for migration, see https://grafana.com/docs/mimir/latest/migration-guide/migrating-from-single-zone-with-helm/
               migration:
                 # -- Indicate if migration is ongoing for multi zone ingester
@@ -1015,6 +1054,8 @@ spec:
               initialDelaySeconds: 45
 
             resources:
+              limits:
+                memory: 128Mi
               requests:
                 cpu: 100m
                 memory: 128Mi
@@ -1030,16 +1071,18 @@ spec:
 
           ruler:
             enabled: true
-            replicas: 1
+            replicas: 2
 
             service:
               annotations: {}
               labels: {}
 
             resources:
+              limits:
+                memory: 2.8Gi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 1
+                memory: 2Gi
 
             # Additional ruler container arguments, e.g. log level (debug, info, warn, error)
             extraArgs: {}
@@ -1108,9 +1151,11 @@ spec:
               labels: {}
 
             resources:
+              limits:
+                memory: 5.6Gi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 2
+                memory: 4Gi
 
             # Additional querier container arguments, e.g. log level (debug, info, warn, error)
             extraArgs: {}
@@ -1171,16 +1216,18 @@ spec:
             extraEnvFrom: []
 
           query_frontend:
-            replicas: 1
+            replicas: 2
 
             service:
               annotations: {}
               labels: {}
 
             resources:
+              limits:
+                memory: 2.8Gi
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 2
+                memory: 2Gi
 
             # Additional query-frontend container arguments, e.g. log level (debug, info, warn, error)
             extraArgs: {}
@@ -1319,7 +1366,7 @@ spec:
             # If store_gateway.zoneAwareReplication.enabled=false, this number is taken as is.
             # Otherwise each zone starts `ceil(replicas / number_of_zones)` number of pods.
             #   E.g. if 'replicas' is set to 4 and there are 3 zones, then 4/3=1.33 and after rounding up it means 2 pods per zone are started.
-            replicas: 1
+            replicas: 3
 
             service:
               annotations: {}
@@ -1329,9 +1376,11 @@ spec:
             schedulerName: ""
 
             resources:
+              limits:
+                memory: 2.1Gi
               requests:
-                cpu: 100m
-                memory: 512Mi
+                cpu: 1
+                memory: 1.5Gi
 
             # Additional store-gateway container arguments, e.g. log level (debug, info, warn, error)
             extraArgs: {}
@@ -1352,16 +1401,32 @@ spec:
             # -- NodeSelector to pin store-gateway pods to certain set of nodes. This is ignored when store_gateway.zoneAwareReplication.enabled=true.
             nodeSelector: {}
             # -- Pod affinity settings for the store_gateway. This is ignored when store_gateway.zoneAwareReplication.enabled=true.
-            affinity: {}
+            affinity:
+              podAntiAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  - labelSelector:
+                      matchExpressions:
+                        - key: target # support for enterprise.legacyLabels
+                          operator: In
+                          values:
+                            - store-gateway
+                    topologyKey: 'kubernetes.io/hostname'
 
+                  - labelSelector:
+                      matchExpressions:
+                        - key: app.kubernetes.io/component
+                          operator: In
+                          values:
+                            - store-gateway
+                    topologyKey: 'kubernetes.io/hostname'
             # -- topologySpreadConstraints allows to customize the default topologySpreadConstraints. This can be either a single dict as shown below or a slice of topologySpreadConstraints.
             # labelSelector is taken from the constraint itself (if it exists) or is generated by the chart using the same selectors as for services.
             # It is recommended to replace this with requiredDuringSchedulingIgnoredDuringExecution podAntiAffinity rules when
             # deploying to production.
-            topologySpreadConstraints:
-              maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: ScheduleAnyway
+            topologySpreadConstraints: {}
+              # maxSkew: 1
+              # topologyKey: kubernetes.io/hostname
+              # whenUnsatisfiable: ScheduleAnyway
 
             annotations: {}
 
@@ -1457,7 +1522,7 @@ spec:
               maxUnavailable: 10
               # -- topologyKey to use in pod anti-affinity. If unset, no anti-affinity rules are generated. If set, the generated anti-affinity rule makes sure that pods from different zones do not mix.
               # E.g.: topologyKey: 'kubernetes.io/hostname'
-              topologyKey: null
+              topologyKey: 'kubernetes.io/hostname'
               # -- Auxiliary values for migration, see https://grafana.com/docs/mimir/latest/migration-guide/migrating-from-single-zone-with-helm/
               migration:
                 # -- Indicate if migration is ongoing for multi zone store-gateway
@@ -1517,9 +1582,11 @@ spec:
             schedulerName: ""
 
             resources:
+              limits:
+                memory: 2.1Gi
               requests:
-                cpu: 100m
-                memory: 512Mi
+                cpu: 1
+                memory: 1.5Gi
 
             # Additional compactor container arguments, e.g. log level (debug, info, warn, error)
             extraArgs: {}
@@ -1567,7 +1634,7 @@ spec:
 
               # compactor data Persistent Volume size
               #
-              size: 2Gi
+              size: 20Gi
 
               # Subdirectory of compactor data Persistent Volume to mount
               # Useful if the volume's root directory is not empty
@@ -1655,10 +1722,10 @@ spec:
 
           chunks-cache:
             # -- Specifies whether memcached based chunks-cache should be enabled
-            enabled: false
+            enabled: true
 
             # -- Total number of chunks-cache replicas
-            replicas: 1
+            replicas: 2
 
             # -- Port of the chunks-cache service
             port: 11211
@@ -1722,10 +1789,10 @@ spec:
 
           index-cache:
             # -- Specifies whether memcached based index-cache should be enabled
-            enabled: false
+            enabled: true
 
             # -- Total number of index-cache replicas
-            replicas: 1
+            replicas: 3
 
             # -- Port of the index-cache service
             port: 11211
@@ -1789,7 +1856,7 @@ spec:
 
           metadata-cache:
             # -- Specifies whether memcached based metadata-cache should be enabled
-            enabled: false
+            enabled: true
 
             # -- Total number of metadata-cache replicas
             replicas: 1
@@ -1856,10 +1923,10 @@ spec:
 
           results-cache:
             # -- Specifies whether memcached based results-cache should be enabled
-            enabled: false
+            enabled: true
 
             # -- Total number of results-cache replicas
-            replicas: 1
+            replicas: 2
 
             # -- Port of the results-cache service
             port: 11211
@@ -1949,7 +2016,7 @@ spec:
               allowPrivilegeEscalation: false
 
           minio:
-            enabled: true
+            enabled: false
             mode: standalone
             rootUser: grafana-mimir
             buckets:
@@ -1992,7 +2059,7 @@ spec:
             verboseLogging: true
             autoscaling:
               # -- Enable autoscaling for nginx
-              enabled: false
+              enabled: true
               # -- Minimum autoscaling replicas for nginx
               minReplicas: 1
               # -- Maximum autoscaling replicas for nginx
@@ -2042,7 +2109,12 @@ spec:
                 drop: [ALL]
               allowPrivilegeEscalation: false
             # -- Resource requests and limits for the nginx
-            resources: {}
+            resources:
+              limits:
+                memory: 731Mi
+              requests:
+                cpu: 1
+                memory: 512Mi
             # -- Grace period to allow the nginx to shutdown before it is killed
             terminationGracePeriodSeconds: 30
             # -- Affinity for nginx pods. Passed through `tpl` and, thus, to be configured as string
@@ -2313,7 +2385,7 @@ spec:
 
             # -- HorizontalPodAutoscaler
             autoscaling:
-              enabled: false
+              enabled: true
               minReplicas: 1
               maxReplicas: 3
               targetCPUUtilizationPercentage: 70
@@ -2371,7 +2443,12 @@ spec:
                 drop: [ALL]
 
             # -- Resource requests and limits for the container
-            resources: {}
+            resources:
+              limits:
+                memory: 731Mi
+              requests:
+                cpu: 1
+                memory: 512Mi
             # -- Grace period to allow the gateway container to shut down before it is killed
             terminationGracePeriodSeconds: 30
 
@@ -2952,7 +3029,7 @@ spec:
           # Settings for the admin_api service providing authentication and authorization service.
           # Can only be enabled if enterprise.enabled is true - requires license.
           admin_api:
-            replicas: 1
+            replicas: 2
 
             annotations: {}
             service:
@@ -3005,9 +3082,11 @@ spec:
               initialDelaySeconds: 45
 
             resources:
+              limits:
+                memory: 128Mi
               requests:
-                cpu: 10m
-                memory: 32Mi
+                cpu: 100m
+                memory: 64Mi
 
             terminationGracePeriodSeconds: 60
 
@@ -3024,10 +3103,10 @@ spec:
           # See GEM documentation for Redis configuration option.
           admin-cache:
             # -- Specifies whether admin-cache using memcached should be enabled
-            enabled: false
+            enabled: true
 
             # -- Total number of admin-cache replicas
-            replicas: 1
+            replicas: 2
 
             # -- Port of the admin-cache service
             port: 11211

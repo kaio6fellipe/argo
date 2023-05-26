@@ -261,31 +261,16 @@ spec:
             # -- Storage config. Providing this will automatically populate all necessary storage configs in the templated config.
             storage:
               bucketNames:
-                chunks: chunks
-                ruler: ruler
-                admin: admin
-              type: s3
+                chunks: loki-chunks-bucket-ktech-br-dev
+                ruler: loki-ruler-bucket-ktech-br-dev
+                admin: loki-admin-bucket-ktech-br-dev
+              type: "s3"
               s3:
-                s3: loki-bucket-ktech-br-dev
-                endpoint: https://loki-bucket-ktech-br-dev.s3.amazonaws.com/
                 region: us-east-1
-                secretAccessKey: null
-                accessKeyId: null
                 signatureVersion: null
                 s3ForcePathStyle: false
                 insecure: false
                 http_config: {}
-              gcs:
-                chunkBufferSize: 0
-                requestTimeout: "0s"
-                enableHttp2: true
-              azure:
-                accountName: null
-                accountKey: null
-                useManagedIdentity: false
-                useFederatedToken: false
-                userAssignedId: null
-                requestTimeout: null
               filesystem:
                 chunks_directory: /var/loki/chunks
                 rules_directory: /var/loki/rules
