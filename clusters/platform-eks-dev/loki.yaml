@@ -615,7 +615,7 @@ spec:
             # The Loki canary pushes logs to and queries from this loki installation to test
             # that it's working correctly
             lokiCanary:
-              enabled: true
+              enabled: false
               # -- Additional annotations for the `loki-canary` Daemonset
               annotations: {}
               # -- Additional CLI arguments for the `loki-canary' command
