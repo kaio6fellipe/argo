@@ -30,7 +30,7 @@ spec:
           # -- Overrides the chart's name
           nameOverride: null
           # -- Overrides the chart's computed fullname
-          fullnameOverride: null
+          fullnameOverride: loki
           # -- Overrides the chart's cluster label
           clusterLabelOverride: null
           # -- Image pull secrets for Docker images

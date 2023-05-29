@@ -45,7 +45,7 @@ spec:
 
           # -- Overrides the chart's computed fullname. Used to change the full prefix of resource names. E.g. myRelease-mimir-ingester-1 to fullnameOverride-ingester-1.
           # Note: Grafana provided dashboards rely on the default naming and will need changes.
-          fullnameOverride: null
+          fullnameOverride: mimir
 
           image:
             # -- Grafana Mimir container image repository. Note: for Grafana Enterprise Metrics use the value 'enterprise.image.repository'
@@ -2052,7 +2052,7 @@ spec:
           # Can only be enabled when 'enterprise.enabled' is false.
           nginx:
             # -- Specifies whether nginx should be enabled
-            enabled: true
+            enabled: false
             # -- Number of replicas for nginx
             replicas: 1
             # -- Enable logging of 2xx and 3xx HTTP requests
@@ -2378,7 +2378,7 @@ spec:
           gateway:
             # -- The gateway is deployed by default for enterprise installations (enterprise.enabled=true).
             # Toggle this to have it deployed for non-enterprise installations too.
-            enabledNonEnterprise: false
+            enabledNonEnterprise: true
 
             # -- Number of replicas for the Deployment
             replicas: 1
@@ -2386,8 +2386,8 @@ spec:
             # -- HorizontalPodAutoscaler
             autoscaling:
               enabled: true
-              minReplicas: 1
-              maxReplicas: 3
+              minReplicas: 2
+              maxReplicas: 4
               targetCPUUtilizationPercentage: 70
               targetMemoryUtilizationPercentage: 70
 
@@ -2517,6 +2517,14 @@ spec:
                 - host: internal-mimir.ktech-devops.com.br
                   paths:
                     - path: /
+                      pathType: Prefix
+                      backend:
+                        service:
+                          name: ssl-redirect
+                          port:
+                            name: use-annotation
+                    - path: /
+                      pathType: Prefix
                       # -- pathType (e.g. ImplementationSpecific, Prefix, .. etc.) might also be required by some Ingress Controllers
                       # pathType: Prefix
               # -- TLS configuration for the nginx ingress

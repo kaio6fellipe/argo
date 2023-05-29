@@ -1,0 +1,226 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana-agent
+  namespace: argocd
+spec:
+  destination:
+    namespace: grafana-agent
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: grafana-agent
+      repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 0.14.0
+      helm:
+        releaseName: grafana-agent
+        version: v3
+        values: |
+          # -- Overrides the chart's name. Used to change the infix in the resource names.
+          nameOverride: null
+
+          # -- Overrides the chart's computed fullname. Used to change the full prefix of
+          # resource names.
+          fullnameOverride: grafana-agent
+
+          # Various agent settings.
+          agent:
+            # -- Mode to run Grafana Agent in. Can be "flow" or "static".
+            mode: 'flow'
+            configMap:
+              # -- Create a new ConfigMap for the config file.
+              create: true
+              # -- Content to assign to the new ConfigMap.  This is passed into `tpl` allowing for templating from values.
+              content: ''
+
+              # -- Name of existing ConfigMap to use. Used when create is false.
+              name: null
+              # -- Key in ConfigMap to get config from.
+              key: null
+
+            # -- Path to where Grafana Agent stores data (for example, the Write-Ahead Log).
+            # By default, data is lost between reboots.
+            storagePath: /tmp/agent
+
+            # -- Address to listen for traffic on. 0.0.0.0 exposes the UI to other
+            # containers.
+            listenAddr: 0.0.0.0
+            # -- Port to listen for traffic on.
+            listenPort: 80
+
+            # -- Port to listen for faro traffic on.
+            faroPort: 12347
+
+            # -- Enables sending Grafana Labs anonymous usage stats to help improve Grafana
+            # Agent.
+            enableReporting: true
+
+            # -- Extra environment variables to pass to the agent container.
+            extraEnv: []
+
+            # -- Maps all the keys on a ConfigMap or Secret as environment variables. https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envfromsource-v1-core
+            envFrom: []
+
+            # -- Extra args to pass to `agent run`: https://grafana.com/docs/agent/latest/flow/reference/cli/run/
+            extraArgs: []
+
+            # -- Extra ports to expose on the Agent
+            extraPorts: []
+
+            mounts:
+              # -- Mount /var/log from the host into the container for log collection.
+              varlog: false
+              # -- Mount /var/lib/docker/containers from the host into the container for log
+              # collection.
+              dockercontainers: false
+
+              # -- Extra volume mounts to add into the Grafana Agent container. Does not
+              # affect the watch container.
+              extra: []
+
+            # -- Security context to apply to the Grafana Agent container.
+            securityContext: {}
+
+            # -- Resource requests and limits to apply to the Grafana Agent container.
+            resources: {}
+
+          image:
+            # -- Grafana Agent image repository.
+            repository: grafana/agent
+            # -- (string) Grafana Agent image tag. When empty, the Chart's appVersion is
+            # used.
+            tag: null
+            # -- Grafana Agent image pull policy.
+            pullPolicy: IfNotPresent
+            # -- Optional set of image pull secrets.
+            pullSecrets: []
+
+          rbac:
+            # -- Whether to create RBAC resources for the agent.
+            create: true
+
+          serviceAccount:
+            # -- Whether to create a service account for the Grafana Agent deployment.
+            create: true
+            # -- Annotations to add to the created service account.
+            annotations: {}
+            # -- The name of the existing service account to use when
+            # serviceAccount.create is false.
+            name: null
+
+          # Options for the extra controller used for config reloading.
+          configReloader:
+            # -- Enables automatically reloading when the agent config changes.
+            enabled: true
+            image:
+              # -- Repository to get config reloader image from.
+              repository: jimmidyson/configmap-reload
+              # -- Tag of image to use for config reloading.
+              tag: v0.8.0
+            # -- Override the args passed to the container.
+            customArgs: []
+
+          controller:
+            # -- Type of controller to use for deploying Grafana Agent in the cluster.
+            # Must be one of 'daemonset', 'deployment', or 'statefulset'.
+            type: 'daemonset'
+
+            # -- Number of pods to deploy. Ignored when controller.type is 'daemonset'.
+            replicas: 1
+
+            # -- Configures Pods to use the host network. When set to true, the ports that will be used must be specified.
+            hostNetwork: false
+
+            # -- Configures the DNS policy for the pod. https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+            dnsPolicy: ClusterFirst
+
+            # -- Update strategy for updating deployed Pods.
+            updateStrategy: {}
+
+            # -- Tolerations to apply to Grafana Agent pods.
+            tolerations: []
+
+            # -- priorityClassName to apply to Grafana Agent pods.
+            priorityClassName: ''
+
+            # -- Extra pod annotations to add.
+            podAnnotations: {}
+
+            # -- Extra pod labels to add.
+            podLabels: {}
+
+            autoscaling:
+              # -- Creates a HorizontalPodAutoscaler for controller type deployment.
+              enabled: false
+              # -- The lower limit for the number of replicas to which the autoscaler can scale down.
+              minReplicas: 1
+              # -- The upper limit for the number of replicas to which the autoscaler can scale up.
+              maxReplicas: 5
+              # -- Average CPU utilization across all relevant pods, a percentage of the requested value of the resource for the pods. Setting `targetCPUUtilizationPercentage` to 0 will disable CPU scaling.
+              targetCPUUtilizationPercentage: 0
+              # -- Average Memory utilization across all relevant pods, a percentage of the requested value of the resource for the pods. Setting `targetMemoryUtilizationPercentage` to 0 will disable Memory scaling.
+              targetMemoryUtilizationPercentage: 80
+
+            # -- Affinity configuration for pods.
+            affinity: {}
+
+            volumes:
+              # -- Extra volumes to add to the Grafana Agent pod.
+              extra: []
+
+            # -- volumeClaimTemplates to add when controller.type is 'statefulset'.
+            volumeClaimTemplates: []
+
+          service:
+            # -- Creates a Service for the controller's pods.
+            enabled: true
+            # -- Service type
+            type: ClusterIP
+            # -- Cluster IP, can be set to None, empty "" or an IP address
+            clusterIP: ''
+            annotations: {}
+              # cloud.google.com/load-balancer-type: Internal
+
+          ingress:
+            # -- Enables ingress for the agent (faro port)
+            enabled: false
+            # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
+            # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
+            # ingressClassName: nginx
+            # Values can be templated
+            annotations:
+              {}
+              # kubernetes.io/ingress.class: nginx
+              # kubernetes.io/tls-acme: "true"
+            labels: {}
+            path: /
+
+            # pathType is only for k8s >= 1.1=
+            pathType: Prefix
+
+            hosts:
+              - chart-example.local
+            ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
+            extraPaths: []
+            # - path: /*
+            #   backend:
+            #     serviceName: ssl-redirect
+            #     servicePort: use-annotation
+            ## Or for k8s > 1.19
+            # - path: /*
+            #   pathType: Prefix
+            #   backend:
+            #     service:
+            #       name: ssl-redirect
+            #       port:
+            #         name: use-annotation
+
+            tls: []
+            #  - secretName: chart-example-tls
+            #    hosts:
+            #      - chart-example.local
+  project: platform-eks-dev
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

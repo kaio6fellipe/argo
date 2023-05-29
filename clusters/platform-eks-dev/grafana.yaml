@@ -75,6 +75,23 @@ spec:
               host: "grafana-rds.dev.private.ktech-br.com:5432"
               name: grafana
               user: grafana_usr
+          datasources:
+            datasources.yaml:
+              apiVersion: 1
+              datasources:
+                - name: Loki
+                  uid: loki
+                  type: loki
+                  access: proxy
+                  url: https://internal-loki.ktech-devops.com.br
+                  version: 1
+
+                - name: Mimir
+                  uid: mimir
+                  type: prometheus
+                  access: proxy
+                  url: https://internal-mimir.ktech-devops.com.br
+
           envValueFrom:
             GF_AUTH_GITHUB_CLIENT_ID:
               secretKeyRef:
