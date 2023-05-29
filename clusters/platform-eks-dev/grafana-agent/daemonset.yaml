@@ -9,23 +9,23 @@ kind: ClusterRole
 metadata:
   name: grafana-agent-logs
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  - nodes/proxy
-  - services
-  - endpoints
-  - pods
-  - events
-  verbs:
-  - get
-  - list
-  - watch
-- nonResourceURLs:
-  - /metrics
-  verbs:
-  - get
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - nodes/proxy
+      - services
+      - endpoints
+      - pods
+      - events
+    verbs:
+      - get
+      - list
+      - watch
+  - nonResourceURLs:
+      - /metrics
+    verbs:
+      - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -36,9 +36,9 @@ roleRef:
   kind: ClusterRole
   name: grafana-agent-logs
 subjects:
-- kind: ServiceAccount
-  name: grafana-agent-logs
-  namespace: grafana-agent
+  - kind: ServiceAccount
+    name: grafana-agent-logs
+    namespace: grafana-agent
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -56,60 +56,60 @@ spec:
         name: grafana-agent-logs
     spec:
       containers:
-      - args:
-        - -config.expand-env=true
-        - -config.file=/etc/agent/agent.yaml
-        - -server.http.address=0.0.0.0:80
-        env:
-        - name: HOSTNAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
-        - name: GRAFANA_CLOUD_METRICSUSER
-          valueFrom:
-            secretKeyRef:
-              name: eks-secret-grafana-agent
-              key: GRAFANA_CLOUD_METRICSUSER
-        - name: GRAFANA_CLOUD_LOGSUSER
-          valueFrom:
-            secretKeyRef:
-              name: eks-secret-grafana-agent
-              key: GRAFANA_CLOUD_LOGSUSER
-        - name: GRAFANA_CLOUD_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: eks-secret-grafana-agent
-              key: GRAFANA_CLOUD_TOKEN
-        image: grafana/agent:v0.33.1
-        imagePullPolicy: IfNotPresent
-        name: grafana-agent-logs
-        ports:
-        - containerPort: 80
-          name: http-metrics
-        securityContext:
-          privileged: true
-          runAsUser: 0
-        volumeMounts:
-        - mountPath: /etc/agent
+        - args:
+            - -config.expand-env=true
+            - -config.file=/etc/agent/agent.yaml
+            - -server.http.address=0.0.0.0:80
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: GRAFANA_CLOUD_METRICSUSER
+              valueFrom:
+                secretKeyRef:
+                  name: eks-secret-grafana-agent
+                  key: GRAFANA_CLOUD_METRICSUSER
+            - name: GRAFANA_CLOUD_LOGSUSER
+              valueFrom:
+                secretKeyRef:
+                  name: eks-secret-grafana-agent
+                  key: GRAFANA_CLOUD_LOGSUSER
+            - name: GRAFANA_CLOUD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: eks-secret-grafana-agent
+                  key: GRAFANA_CLOUD_TOKEN
+          image: grafana/agent:v0.33.1
+          imagePullPolicy: IfNotPresent
           name: grafana-agent-logs
-        - mountPath: /var/log
-          name: varlog
-        - mountPath: /var/lib/docker/containers
-          name: varlibdockercontainers
-          readOnly: true
+          ports:
+            - containerPort: 80
+              name: http-metrics
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /etc/agent
+              name: grafana-agent-logs
+            - mountPath: /var/log
+              name: varlog
+            - mountPath: /var/lib/docker/containers
+              name: varlibdockercontainers
+              readOnly: true
       serviceAccountName: grafana-agent-logs
       tolerations:
-      - effect: NoSchedule
-        operator: Exists
+        - effect: NoSchedule
+          operator: Exists
       volumes:
-      - configMap:
+        - configMap:
+            name: grafana-agent-logs
           name: grafana-agent-logs
-        name: grafana-agent-logs
-      - hostPath:
-          path: /var/log
-        name: varlog
-      - hostPath:
-          path: /var/lib/docker/containers
-        name: varlibdockercontainers
+        - hostPath:
+            path: /var/log
+          name: varlog
+        - hostPath:
+            path: /var/lib/docker/containers
+          name: varlibdockercontainers
   updateStrategy:
     type: RollingUpdate

@@ -9,23 +9,23 @@ kind: ClusterRole
 metadata:
   name: grafana-agent
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  - nodes/proxy
-  - services
-  - endpoints
-  - pods
-  - events
-  verbs:
-  - get
-  - list
-  - watch
-- nonResourceURLs:
-  - /metrics
-  verbs:
-  - get
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - nodes/proxy
+      - services
+      - endpoints
+      - pods
+      - events
+    verbs:
+      - get
+      - list
+      - watch
+  - nonResourceURLs:
+      - /metrics
+    verbs:
+      - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -36,9 +36,9 @@ roleRef:
   kind: ClusterRole
   name: grafana-agent
 subjects:
-- kind: ServiceAccount
-  name: grafana-agent
-  namespace: grafana-agent
+  - kind: ServiceAccount
+    name: grafana-agent
+    namespace: grafana-agent
 ---
 apiVersion: v1
 kind: Service
@@ -50,9 +50,9 @@ metadata:
 spec:
   clusterIP: None
   ports:
-  - name: grafana-agent-http-metrics
-    port: 80
-    targetPort: 80
+    - name: grafana-agent-http-metrics
+      port: 80
+      targetPort: 80
   selector:
     name: grafana-agent
 ---
@@ -73,58 +73,58 @@ spec:
         name: grafana-agent
     spec:
       containers:
-      - args:
-        - -config.expand-env=true
-        - -config.file=/etc/agent/agent.yaml
-        - -enable-features=integrations-next
-        - -server.http.address=0.0.0.0:80
-        env:
-        - name: HOSTNAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
-        - name: GRAFANA_CLOUD_METRICSUSER
-          valueFrom:
-            secretKeyRef:
-              name: eks-secret-grafana-agent
-              key: GRAFANA_CLOUD_METRICSUSER
-        - name: GRAFANA_CLOUD_LOGSUSER
-          valueFrom:
-            secretKeyRef:
-              name: eks-secret-grafana-agent
-              key: GRAFANA_CLOUD_LOGSUSER
-        - name: GRAFANA_CLOUD_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: eks-secret-grafana-agent
-              key: GRAFANA_CLOUD_TOKEN
-        image: grafana/agent:v0.33.1
-        imagePullPolicy: IfNotPresent
-        name: grafana-agent
-        ports:
-        - containerPort: 80
-          name: http-metrics
-        volumeMounts:
-        - mountPath: /var/lib/agent
-          name: agent-wal
-        - mountPath: /etc/agent
+        - args:
+            - -config.expand-env=true
+            - -config.file=/etc/agent/agent.yaml
+            - -enable-features=integrations-next
+            - -server.http.address=0.0.0.0:80
+          env:
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: GRAFANA_CLOUD_METRICSUSER
+              valueFrom:
+                secretKeyRef:
+                  name: eks-secret-grafana-agent
+                  key: GRAFANA_CLOUD_METRICSUSER
+            - name: GRAFANA_CLOUD_LOGSUSER
+              valueFrom:
+                secretKeyRef:
+                  name: eks-secret-grafana-agent
+                  key: GRAFANA_CLOUD_LOGSUSER
+            - name: GRAFANA_CLOUD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: eks-secret-grafana-agent
+                  key: GRAFANA_CLOUD_TOKEN
+          image: grafana/agent:v0.33.1
+          imagePullPolicy: IfNotPresent
           name: grafana-agent
+          ports:
+            - containerPort: 80
+              name: http-metrics
+          volumeMounts:
+            - mountPath: /var/lib/agent
+              name: agent-wal
+            - mountPath: /etc/agent
+              name: grafana-agent
       serviceAccountName: grafana-agent
       volumes:
-      - configMap:
+        - configMap:
+            name: grafana-agent
           name: grafana-agent
-        name: grafana-agent
   updateStrategy:
     type: RollingUpdate
   volumeClaimTemplates:
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: agent-wal
-      namespace: grafana-agent
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: agent-wal
+        namespace: grafana-agent
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi

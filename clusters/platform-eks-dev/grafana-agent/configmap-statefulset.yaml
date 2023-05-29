@@ -225,7 +225,7 @@ data:
               source_labels:
                 - __meta_kubernetes_pod_node_name
               target_label: instance
-    
+
     integrations:
       eventhandler:
         cache_path: /var/lib/agent/eventhandler.cache

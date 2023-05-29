@@ -26,7 +26,7 @@ data:
         basic_auth:
           username: ${GRAFANA_CLOUD_METRICSUSER}
           password: ${GRAFANA_CLOUD_TOKEN}
-    
+
     logs:
       configs:
       - name: integrations
