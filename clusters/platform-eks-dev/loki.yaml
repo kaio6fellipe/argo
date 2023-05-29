@@ -1002,7 +1002,6 @@ spec:
             enabled: true
             ingressClassName: alb
             annotations:
-              kubernetes.io/ingress.class: alb
               alb.ingress.kubernetes.io/scheme: internal
               alb.ingress.kubernetes.io/target-type: ip
               alb.ingress.kubernetes.io/group.name: internal

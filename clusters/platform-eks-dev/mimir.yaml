@@ -2505,7 +2505,6 @@ spec:
               ingressClassName: alb
               # -- Annotations for the Ingress
               annotations:
-                kubernetes.io/ingress.class: alb
                 alb.ingress.kubernetes.io/scheme: internal
                 alb.ingress.kubernetes.io/target-type: ip
                 alb.ingress.kubernetes.io/group.name: internal
