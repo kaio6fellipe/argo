@@ -861,7 +861,7 @@ spec:
                 - ReadWriteOnce
 
               # Ingester data Persistent Volume size
-              size: 50Gi
+              size: 5Gi
 
               # Subdirectory of Ingester data Persistent Volume to mount
               # Useful if the volume's root directory is not empty
@@ -1634,7 +1634,7 @@ spec:
 
               # compactor data Persistent Volume size
               #
-              size: 20Gi
+              size: 5Gi
 
               # Subdirectory of compactor data Persistent Volume to mount
               # Useful if the volume's root directory is not empty
