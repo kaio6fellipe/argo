@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mimir
+  name: grafana-mimir
   namespace: argocd
 spec:
   destination:
