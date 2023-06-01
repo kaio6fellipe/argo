@@ -48,7 +48,6 @@ metadata:
   name: grafana-agent
   namespace: grafana-agent
 spec:
-  clusterIP: None
   ports:
     - name: grafana-agent-http-metrics
       port: 80
