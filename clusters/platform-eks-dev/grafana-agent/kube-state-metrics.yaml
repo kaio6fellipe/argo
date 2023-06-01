@@ -1,16 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana-agent
+  name: kube-state-metrics
   namespace: argocd
 spec:
   destination:
     namespace: grafana-agent
     server: 'https://kubernetes.default.svc'
-  sources:
-    - path: clusters/platform-eks-dev/grafana-agent
-      repoURL: 'https://github.com/kaio6fellipe/argo'
-      targetRevision: HEAD
+  source:
+    chart: kube-state-metrics
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 5.6.4
+    helm:
+      releaseName: ksm
+      version: v3
+      parameters:
+        - name: image.tag
+          value: "v2.8.2"
   project: platform-eks-dev
   syncPolicy:
     automated:

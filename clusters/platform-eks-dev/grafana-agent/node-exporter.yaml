@@ -1,16 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana-agent
+  name: node-exporter
   namespace: argocd
 spec:
   destination:
     namespace: grafana-agent
     server: 'https://kubernetes.default.svc'
-  sources:
-    - path: clusters/platform-eks-dev/grafana-agent
-      repoURL: 'https://github.com/kaio6fellipe/argo'
-      targetRevision: HEAD
+  source:
+    chart: prometheus-node-exporter
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 4.17.3
+    helm:
+      releaseName: nodeexporter
+      version: v3
   project: platform-eks-dev
   syncPolicy:
     automated:
