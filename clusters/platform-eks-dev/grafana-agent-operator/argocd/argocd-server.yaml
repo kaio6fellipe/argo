@@ -1,17 +1,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  annotations:
-    argocd.argoproj.io/tracking-id: 'argocd:monitoring.coreos.com/ServiceMonitor:argocd/argocd-server'
   labels:
     app.kubernetes.io/component: server
     app.kubernetes.io/instance: argocd
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
-    helm.sh/chart: argo-cd-5.28.1
+    instance: primary
   name: argocd-server
-  namespace: argocd
+  namespace: grafana-agent-operator
 spec:
   endpoints:
     - interval: 60s

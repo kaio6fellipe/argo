@@ -834,7 +834,7 @@ controller:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -926,7 +926,7 @@ dex:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -1375,7 +1375,7 @@ redis:
 
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Interval at which metrics should be scraped
       interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -1838,7 +1838,7 @@ server:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -2317,7 +2317,7 @@ repoServer:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -2470,7 +2470,7 @@ applicationSet:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor interval
       interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
@@ -2787,7 +2787,7 @@ notifications:
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: true
+      enabled: false
       # -- Prometheus ServiceMonitor selector
       selector: {}
         # prometheus: kube-prometheus

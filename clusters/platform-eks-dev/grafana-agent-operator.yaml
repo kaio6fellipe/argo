@@ -19,6 +19,8 @@ spec:
     - path: clusters/platform-eks-dev/grafana-agent-operator
       repoURL: 'https://github.com/kaio6fellipe/argo'
       targetRevision: HEAD
+      directory:
+        recurse: true
   project: platform-eks-dev
   syncPolicy:
     automated:
