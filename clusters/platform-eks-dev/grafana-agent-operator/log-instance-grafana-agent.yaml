@@ -16,7 +16,7 @@ spec:
           key: username
           name: logs-secret
       externalLabels:
-        cluster: platform-eks-cluster
+        cluster: platform-eks-dev
       url: https://logs-prod-006.grafana.net/loki/api/v1/push
   podLogsNamespaceSelector: {}
   podLogsSelector:

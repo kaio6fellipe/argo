@@ -12,7 +12,7 @@ spec:
         agent: grafana-agent
   metrics:
     externalLabels:
-      cluster: platform-eks-cluster
+      cluster: platform-eks-dev
     instanceSelector:
       matchLabels:
         agent: grafana-agent
