@@ -836,7 +836,7 @@ controller:
       # -- Enable a prometheus ServiceMonitor
       enabled: false
       # -- Prometheus ServiceMonitor interval
-      interval: 30s
+      interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
       relabelings: []
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
@@ -928,7 +928,7 @@ dex:
       # -- Enable a prometheus ServiceMonitor
       enabled: false
       # -- Prometheus ServiceMonitor interval
-      interval: 30s
+      interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
       relabelings: []
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
@@ -1377,7 +1377,7 @@ redis:
       # -- Enable a prometheus ServiceMonitor
       enabled: false
       # -- Interval at which metrics should be scraped
-      interval: 30s
+      interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
       relabelings: []
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
@@ -1840,7 +1840,7 @@ server:
       # -- Enable a prometheus ServiceMonitor
       enabled: false
       # -- Prometheus ServiceMonitor interval
-      interval: 30s
+      interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
       relabelings: []
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
@@ -2319,7 +2319,7 @@ repoServer:
       # -- Enable a prometheus ServiceMonitor
       enabled: false
       # -- Prometheus ServiceMonitor interval
-      interval: 30s
+      interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
       relabelings: []
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
@@ -2472,7 +2472,7 @@ applicationSet:
       # -- Enable a prometheus ServiceMonitor
       enabled: false
       # -- Prometheus ServiceMonitor interval
-      interval: 30s
+      interval: 60s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
       relabelings: []
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
