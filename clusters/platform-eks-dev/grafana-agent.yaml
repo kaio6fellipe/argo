@@ -1,19 +1,21 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: grafana-agent
-#   namespace: argocd
-# spec:
-#   destination:
-#     namespace: grafana-agent
-#     server: 'https://kubernetes.default.svc'
-#   sources:
-#     - path: clusters/platform-eks-dev/grafana-agent
-#       repoURL: 'https://github.com/kaio6fellipe/argo'
-#       targetRevision: HEAD
-#   project: platform-eks-dev
-#   syncPolicy:
-#     automated:
-#       prune: true
-#     syncOptions:
-#       - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana-agent
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+spec:
+  destination:
+    namespace: grafana-agent
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - path: clusters/platform-eks-dev/grafana-agent
+      repoURL: 'https://github.com/kaio6fellipe/argo'
+      targetRevision: HEAD
+  project: platform-eks-dev
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

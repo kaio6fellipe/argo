@@ -1,22 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana-agent-operator
+  name: argo-rollouts
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-3"
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   destination:
-    namespace: grafana-agent-operator
+    namespace: argo-rollouts
     server: 'https://kubernetes.default.svc'
   sources:
-    - chart: grafana-agent-operator
-      repoURL: https://grafana.github.io/helm-charts
-      targetRevision: 0.2.15
-      helm:
-        releaseName: grafana-agent-operator
-        version: v3
-    - path: clusters/platform-eks-dev/grafana-agent-operator
+    - path: clusters/platform-eks-dev/argo-rollouts
       repoURL: 'https://github.com/kaio6fellipe/argo'
       targetRevision: HEAD
       directory:
