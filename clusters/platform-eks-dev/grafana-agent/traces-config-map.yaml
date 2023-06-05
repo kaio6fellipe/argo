@@ -4,12 +4,17 @@ metadata:
 apiVersion: v1
 data:
   agent.yaml: |
+    server:
+      log_level: debug
     traces:
       configs:
         - batch:
               send_batch_size: 1000
               timeout: 5s
           name: default
+          automatic_logging:
+            backend: stdout
+            roots: true
           receivers:
               jaeger:
                   protocols:
@@ -31,9 +36,9 @@ data:
             - basic_auth:
                   password: ${GRAFANA_CLOUD_TOKEN}
                   username: ${GRAFANA_CLOUD_TRACESUSER}
-              endpoint: https://tempo-prod-04-prod-us-east-0.grafana.net/tempo
+              endpoint: tempo-prod-04-prod-us-east-0.grafana.net:443
               retry_on_failure:
-                  enabled: false
+                  enabled: true
           scrape_configs:
             - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
               job_name: kubernetes-pods
