@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: tns-cloud
+spec:
+  minReadySeconds: 10
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: app
+  template:
+    metadata:
+      labels:
+        name: app
+    spec:
+      containers:
+        - args:
+            - -log.level=debug
+            - http://db
+          env:
+            - name: JAEGER_AGENT_HOST
+              value: grafana-agent-traces.grafana-agent.svc.cluster.local
+            - name: JAEGER_TAGS
+              value: cluster=platform-eks-dev,namespace=tns-cloud
+            - name: JAEGER_SAMPLER_TYPE
+              value: const
+            - name: JAEGER_SAMPLER_PARAM
+              value: "1"
+          image: grafana/tns-app:latest
+          imagePullPolicy: IfNotPresent
+          name: app
+          ports:
+            - containerPort: 80
+              name: http-metrics
+              protocol: TCP

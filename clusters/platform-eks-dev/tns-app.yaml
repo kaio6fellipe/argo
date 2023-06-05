@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tns-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: tns-cloud
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - path: clusters/platform-eks-dev/tns-app
+      repoURL: 'https://github.com/kaio6fellipe/argo'
+      targetRevision: HEAD
+  project: platform-eks-dev
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

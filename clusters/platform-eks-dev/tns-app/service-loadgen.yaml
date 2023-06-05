@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: loadgen
+  name: loadgen
+  namespace: tns-cloud
+spec:
+  ports:
+    - name: http-metrics
+      port: 80
+      protocol: TCP
+  selector:
+    name: loadgen
