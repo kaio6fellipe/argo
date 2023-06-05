@@ -5,6 +5,9 @@ apiVersion: v1
 data:
   agent.yaml: |
     traces:
+      global:
+        external_labels:
+          cluster: platform-eks-dev
       configs:
         - batch:
               send_batch_size: 1000

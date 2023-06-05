@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-rollouts-demo
+  namespace: argocd
+spec:
+  destination:
+    namespace: argo-rollouts-demo
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - path: clusters/platform-eks-dev/argo-rollouts-demo
+      repoURL: 'https://github.com/kaio6fellipe/argo'
+      targetRevision: HEAD
+      directory:
+        recurse: true
+  project: platform-eks-dev
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
