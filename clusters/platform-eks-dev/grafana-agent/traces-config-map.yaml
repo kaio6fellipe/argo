@@ -38,7 +38,7 @@ data:
                   username: ${GRAFANA_CLOUD_TRACESUSER}
               endpoint: tempo-prod-04-prod-us-east-0.grafana.net:443
               retry_on_failure:
-                  enabled: true
+                  enabled: false
           scrape_configs:
             - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
               job_name: kubernetes-pods
