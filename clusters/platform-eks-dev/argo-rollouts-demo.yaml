@@ -1,19 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: node-exporter
+  name: argo-rollouts-demo
   namespace: argocd
 spec:
   destination:
-    namespace: grafana-agent
+    namespace: argo-rollouts-demo
     server: 'https://kubernetes.default.svc'
-  source:
-    chart: prometheus-node-exporter
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 4.17.3
-    helm:
-      releaseName: nodeexporter
-      version: v3
+  sources:
+    - path: clusters/platform-eks-dev/argo-rollouts-demo
+      repoURL: 'https://github.com/kaio6fellipe/argo'
+      targetRevision: HEAD
+      directory:
+        recurse: true
   project: platform-eks-dev
   syncPolicy:
     automated:
