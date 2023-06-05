@@ -11,8 +11,6 @@ spec:
     - path: clusters/platform-eks-dev/argo-rollouts-demo
       repoURL: 'https://github.com/kaio6fellipe/argo'
       targetRevision: HEAD
-      directory:
-        recurse: true
   project: platform-eks-dev
   syncPolicy:
     automated:
