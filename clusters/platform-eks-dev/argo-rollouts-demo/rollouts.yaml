@@ -15,13 +15,17 @@ spec:
           rootService: rollouts-demo-root
       steps:
         - setWeight: 10
-        - pause: { duration: 20s }
+        - pause:
+            duration: 1m
         - setWeight: 25
-        - pause: { duration: 30s }
+        - pause:
+            duration: 1m
         - setWeight: 50
-        - pause: { duration: 1m }
-        - setWeight: 100
-        - pause: { duration: 5m }
+        - pause:
+            duration: 1m
+        - setWeight: 75
+        - pause:
+            duration: 1m
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -33,7 +37,7 @@ spec:
     spec:
       containers:
         - name: rollouts-demo
-          image: argoproj/rollouts-demo:yellow
+          image: argoproj/rollouts-demo:blue
           ports:
             - name: http
               containerPort: 8080
