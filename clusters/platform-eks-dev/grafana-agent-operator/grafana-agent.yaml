@@ -16,7 +16,7 @@ spec:
     instanceSelector:
       matchLabels:
         agent: grafana-agent
-    scrapeInterval: 60s
+    scrapeInterval: 90s
   logs:
     instanceSelector:
       matchLabels:

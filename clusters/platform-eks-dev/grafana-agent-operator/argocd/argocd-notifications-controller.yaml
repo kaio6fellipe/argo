@@ -11,7 +11,8 @@ metadata:
   namespace: grafana-agent-operator
 spec:
   endpoints:
-    - path: /metrics
+    - interval: 90s
+      path: /metrics
       port: http-metrics
   namespaceSelector:
     matchNames:
