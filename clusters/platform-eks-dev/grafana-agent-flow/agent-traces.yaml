@@ -1,0 +1,49 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana-agent-traces
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+spec:
+  destination:
+    namespace: grafana-agent
+    server: 'https://kubernetes.default.svc'
+  sources:
+    - chart: grafana-agent
+      repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 0.14.0
+      helm:
+        releaseName: grafana-agent-traces
+        version: v3
+        values: |
+          fullnameOverride: grafana-agent-traces
+          agent:
+            mode: 'flow'
+            configMap:
+              create: true
+              content: |
+                log_level = "debug"
+
+                discovery.kubernetes "pods" {
+                  role = "pod"
+                }
+
+                discovery.kubernetes "nodes" {
+                  role = "node"
+                }
+            enableReporting: false
+          controller:
+            type: 'deployment'
+            autostaling:
+              enabled: true
+              minReplicas: 2
+              maxReplicas: 5
+              targetCPUUtilizationPercentage: 75
+              targetMemoryUtilizationPercentage: 80
+  project: platform-eks-dev
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

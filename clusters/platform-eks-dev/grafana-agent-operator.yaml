@@ -1,29 +1,29 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: grafana-agent-operator
-  namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "-3"
-spec:
-  destination:
-    namespace: grafana-agent-operator
-    server: 'https://kubernetes.default.svc'
-  sources:
-    - chart: grafana-agent-operator
-      repoURL: https://grafana.github.io/helm-charts
-      targetRevision: 0.2.15
-      helm:
-        releaseName: grafana-agent-operator
-        version: v3
-    - path: clusters/platform-eks-dev/grafana-agent-operator
-      repoURL: 'https://github.com/kaio6fellipe/argo'
-      targetRevision: HEAD
-      directory:
-        recurse: true
-  project: platform-eks-dev
-  syncPolicy:
-    automated:
-      prune: true
-    syncOptions:
-      - CreateNamespace=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: grafana-agent-operator
+#   namespace: argocd
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "-3"
+# spec:
+#   destination:
+#     namespace: grafana-agent-operator
+#     server: 'https://kubernetes.default.svc'
+#   sources:
+#     - chart: grafana-agent-operator
+#       repoURL: https://grafana.github.io/helm-charts
+#       targetRevision: 0.2.15
+#       helm:
+#         releaseName: grafana-agent-operator
+#         version: v3
+#     - path: clusters/platform-eks-dev/grafana-agent-operator
+#       repoURL: 'https://github.com/kaio6fellipe/argo'
+#       targetRevision: HEAD
+#       directory:
+#         recurse: true
+#   project: platform-eks-dev
+#   syncPolicy:
+#     automated:
+#       prune: true
+#     syncOptions:
+#       - CreateNamespace=true

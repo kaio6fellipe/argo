@@ -6,12 +6,31 @@ data:
   agent.yaml: |
     server:
       log_level: debug
+    metrics:
+      wal_directory: /var/lib/agent/wal
+      global:
+        scrape_interval: 60s
+        external_labels:
+          cluster: platform-eks-dev
+      configs:
+        - name: default
+          scrape_configs:
+            - job_name: tempo_service_graph_metrics
+              static_configs:
+                - targets: ['127.0.0.1:12345']
+          remote_write:
+            - url: https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom
+              basic_auth:
+                username: ${GRAFANA_CLOUD_METRICSUSER}
+                password: ${GRAFANA_CLOUD_TOKEN}
     traces:
       configs:
         - batch:
               send_batch_size: 1000
               timeout: 5s
           name: default
+          service_graphs:
+            enabled: true
           automatic_logging:
             backend: stdout
             roots: true
