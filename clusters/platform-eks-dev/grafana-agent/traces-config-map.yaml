@@ -6,6 +6,14 @@ data:
   agent.yaml: |
     server:
       log_level: debug
+    integrations:
+      agent:
+        enabled: true
+        relabel_configs:
+          - action: replace
+            source_labels:
+              - agent_hostname
+            target_label: instance
     metrics:
       wal_directory: /var/lib/agent/wal
       global:
