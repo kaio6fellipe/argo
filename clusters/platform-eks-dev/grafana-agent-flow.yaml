@@ -1,7 +1,7 @@
 # apiVersion: argoproj.io/v1alpha1
 # kind: Application
 # metadata:
-#   name: grafana-agent
+#   name: grafana-agent-flow
 #   namespace: argocd
 #   annotations:
 #     argocd.argoproj.io/sync-wave: "-3"
@@ -10,9 +10,11 @@
 #     namespace: grafana-agent
 #     server: 'https://kubernetes.default.svc'
 #   sources:
-#     - path: clusters/platform-eks-dev/grafana-agent
+#     - path: clusters/platform-eks-dev/grafana-agent-flow
 #       repoURL: 'https://github.com/kaio6fellipe/argo'
 #       targetRevision: HEAD
+#       directory:
+#         recurse: false
 #   project: platform-eks-dev
 #   syncPolicy:
 #     automated:

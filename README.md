@@ -6,7 +6,7 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=kaio6fellipe_argo&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=kaio6fellipe_argo)
 ![](https://img.shields.io/github/commit-activity/w/kaio6fellipe/argo)
 
-> Bootstrap management and application management of my Kubernetes applications.
+> Bootstrap management and application management of my Kubernetes applications on AWS EKS Cluster.
 
 ## 🧐 How it works?
 

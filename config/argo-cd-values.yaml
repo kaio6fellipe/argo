@@ -732,7 +732,7 @@ controller:
   # -- Resource limits and requests for the application controller pods
   resources:
     limits:
-      cpu: 2000m
+      cpu: 1500m
       memory: 3096Mi
     requests:
       cpu: 1000m
